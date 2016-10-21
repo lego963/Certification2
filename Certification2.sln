@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{E00DA037-7E06-407E-9C12-DC07557ECED1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameWFA", "GameWFA\GameWFA.csproj", "{48EACE33-0FD6-4196-A00E-A05AD9C46F26}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E00DA037-7E06-407E-9C12-DC07557ECED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E00DA037-7E06-407E-9C12-DC07557ECED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E00DA037-7E06-407E-9C12-DC07557ECED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E00DA037-7E06-407E-9C12-DC07557ECED1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48EACE33-0FD6-4196-A00E-A05AD9C46F26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48EACE33-0FD6-4196-A00E-A05AD9C46F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48EACE33-0FD6-4196-A00E-A05AD9C46F26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48EACE33-0FD6-4196-A00E-A05AD9C46F26}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
