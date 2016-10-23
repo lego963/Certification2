@@ -24,6 +24,7 @@ namespace GameWFA
         private List<EntityEnemies> enemies;
         private List<Worker> workers;
         private int wave { get; set; }
+        Graphics g;
 
         public MainForm()
         {
@@ -78,6 +79,8 @@ namespace GameWFA
             SetState(GAME_STATE.RUNNING);
             CreateStartWorkers();
             WaveCreation();
+            g = gamePnl.CreateGraphics();
+            g.DrawImage(Properties.Resources.b4e543d44f2f6fe7c3b16b3207c950d4, 20, 20, 40, 40);
         }
         private void SetState(GAME_STATE state)
         {
