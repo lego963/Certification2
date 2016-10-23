@@ -13,7 +13,17 @@ namespace GameWFA
 {
     public partial class CreateCharacter : Form
     {
-        public static Player player1;
+        public Player player1
+        {
+            get
+            {
+                return _player1;
+            }
+        }
+        private Mage _mage;
+        private Knight _knight;
+        private Rogue _rogue;
+        private Player _player1;
 
         public CreateCharacter()
         {
@@ -22,26 +32,33 @@ namespace GameWFA
 
         private void createBtn_Click(object sender, EventArgs e)
         {
+
+            string name = String.Empty;
             if (String.IsNullOrEmpty(nameTxt.Text)) MessageBox.Show("Please enter the name");
+            else name = nameTxt.Text;
             ENTITY_CLASS eClass;
             switch (classCmbB.Text)
             {
                 case "Mage":
                     eClass = ENTITY_CLASS.Mage;
+                    _mage = new Mage(name);
                     break;
                 case "Knight":
                     eClass = ENTITY_CLASS.Knight;
+                    _knight = new Knight(name);
                     break;
                 case "Rogue":
                     eClass = ENTITY_CLASS.Rogue;
+                    _rogue = new Rogue(name);
                     break;
                 default:
                     MessageBox.Show("You must choose a class for your character");
                     eClass = ENTITY_CLASS.Unknown;
                     break;
             }
-            player1 = new Player(nameTxt.Text, eClass);
-            //MessageBox.Show(String.Format("U have created {2}/n Name {0}/n Damage {1} /n Health {3}", player1.Name, player1.Damage, player1.Class, player1.Health));
+
+            _player1 = new Player(name, eClass);
+
             Close();
         }
     }

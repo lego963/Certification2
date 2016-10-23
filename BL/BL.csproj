@@ -45,6 +45,7 @@
     <Compile Include="Character Classes\Mage.cs" />
     <Compile Include="Character Classes\Player.cs" />
     <Compile Include="Character Classes\Rogue.cs" />
+    <Compile Include="Enemy Classes\Entity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

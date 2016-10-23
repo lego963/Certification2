@@ -33,7 +33,7 @@
             // 
             // createCharBtn
             // 
-            this.createCharBtn.Location = new System.Drawing.Point(220, 349);
+            this.createCharBtn.Location = new System.Drawing.Point(12, 12);
             this.createCharBtn.Name = "createCharBtn";
             this.createCharBtn.Size = new System.Drawing.Size(103, 23);
             this.createCharBtn.TabIndex = 0;
@@ -48,7 +48,7 @@
             this.ClientSize = new System.Drawing.Size(633, 455);
             this.Controls.Add(this.createCharBtn);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "Project Form";
             this.ResumeLayout(false);
 
         }

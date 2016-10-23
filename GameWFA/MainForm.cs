@@ -13,7 +13,8 @@ namespace GameWFA
 {
     public partial class MainForm : Form
     {
-        Player player1 = CreateCharacter.player1;
+        public Player player1 { get; set; }
+
         public MainForm()
         {
             InitializeComponent();
@@ -22,6 +23,8 @@ namespace GameWFA
         private void createCharBtn_Click(object sender, EventArgs e)
         {
             var cc = new CreateCharacter();
+            player1 = cc.player1;
+            
             cc.Show();
         }
     }

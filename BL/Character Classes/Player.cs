@@ -11,8 +11,8 @@ namespace BL.Character_Classes
         public Player() : base() { }
         public Player(string name, ENTITY_CLASS _class) : base()
         {
-            Class = _class;
             Name = name;
+            Class = _class;
         }
     }
 }
