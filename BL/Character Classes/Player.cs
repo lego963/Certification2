@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace BL.Character_Classes
 {
-    public class Knight : Entity
+    public class Player : Entity
     {
-        public Knight() : base() { }
-        public Knight(string name) : base()
+        public Player() : base() { }
+        public Player(string name, ENTITY_CLASS _class) : base()
         {
+            Class = _class;
             Name = name;
-            Damage = rnd.Next(4, 7);
-            Armor = ARMOR.Heavy;
-            Health = 100;
         }
     }
 }

@@ -8,14 +8,13 @@ namespace BL.Character_Classes
 {
     public class Mage : Entity
     {
-        Random rnd = new Random();
-
         public Mage() : base() { }
         public Mage(string name, int damage) : base()
         {
             Name = name;
             Damage = rnd.Next(10, 15);
-            Dodge = 0;
+            Armor = ARMOR.Without;
+            Health = 50;
         }
     }
 }

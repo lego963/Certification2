@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//using BL;
+using BL.Character_Classes;
 
 namespace GameWFA
 {
     public partial class MainForm : Form
     {
+        Player player1 = CreateCharacter.player1;
         public MainForm()
         {
             InitializeComponent();
