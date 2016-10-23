@@ -32,10 +32,11 @@ namespace BL.Character_Classes
         }
 
         public virtual int Hit(out string hit) { hit = "Hit"; return Damage; }
-        public void LevelUp()
+        public void LevelUp(int cost)
         {
             Damage += Damage;
             Health += Health;
+            Gold -= cost;
         }
     }
 }

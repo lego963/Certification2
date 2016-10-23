@@ -38,7 +38,10 @@
             this.currentstatesLbl = new System.Windows.Forms.Label();
             this.gamePnl = new System.Windows.Forms.Panel();
             this.gameTmr = new System.Windows.Forms.Timer(this.components);
+            this.costLbl = new System.Windows.Forms.Label();
+            this.waveLbl = new System.Windows.Forms.Label();
             this.logandbtnPnl.SuspendLayout();
+            this.gamePnl.SuspendLayout();
             this.SuspendLayout();
             // 
             // createCharBtn
@@ -69,6 +72,7 @@
             this.levelupBtn.TabIndex = 2;
             this.levelupBtn.Text = "Level Up";
             this.levelupBtn.UseVisualStyleBackColor = true;
+            this.levelupBtn.Click += new System.EventHandler(this.levelupBtn_Click);
             // 
             // loaddataBtn
             // 
@@ -94,6 +98,7 @@
             // 
             // logandbtnPnl
             // 
+            this.logandbtnPnl.Controls.Add(this.costLbl);
             this.logandbtnPnl.Controls.Add(this.currentstatesLbl);
             this.logandbtnPnl.Controls.Add(this.loaddataBtn);
             this.logandbtnPnl.Controls.Add(this.logLbl);
@@ -117,6 +122,7 @@
             // gamePnl
             // 
             this.gamePnl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.gamePnl.Controls.Add(this.waveLbl);
             this.gamePnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gamePnl.Location = new System.Drawing.Point(238, 0);
             this.gamePnl.Name = "gamePnl";
@@ -126,6 +132,24 @@
             // gameTmr
             // 
             this.gameTmr.Tick += new System.EventHandler(this.gameTmr_Tick);
+            // 
+            // costLbl
+            // 
+            this.costLbl.AutoSize = true;
+            this.costLbl.Location = new System.Drawing.Point(174, 61);
+            this.costLbl.Name = "costLbl";
+            this.costLbl.Size = new System.Drawing.Size(34, 13);
+            this.costLbl.TabIndex = 7;
+            this.costLbl.Text = "Cost: ";
+            // 
+            // waveLbl
+            // 
+            this.waveLbl.AutoSize = true;
+            this.waveLbl.Location = new System.Drawing.Point(741, 4);
+            this.waveLbl.Name = "waveLbl";
+            this.waveLbl.Size = new System.Drawing.Size(42, 13);
+            this.waveLbl.TabIndex = 0;
+            this.waveLbl.Text = "Wave: ";
             // 
             // MainForm
             // 
@@ -140,6 +164,8 @@
             this.Text = "Project Form";
             this.logandbtnPnl.ResumeLayout(false);
             this.logandbtnPnl.PerformLayout();
+            this.gamePnl.ResumeLayout(false);
+            this.gamePnl.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -155,6 +181,8 @@
         private System.Windows.Forms.Panel gamePnl;
         private System.Windows.Forms.Label currentstatesLbl;
         private System.Windows.Forms.Timer gameTmr;
+        private System.Windows.Forms.Label costLbl;
+        private System.Windows.Forms.Label waveLbl;
     }
 }
 

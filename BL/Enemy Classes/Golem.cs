@@ -14,6 +14,7 @@ namespace BL.Enemy_Classes
             Armor = ARMOR.Heavy;
             Health = 50;
             Damage = rnd.Next(3, 5);
+            Type = ENTITY_TYPE.Golem;
         }
         public override int Hit(out string hit)
         {

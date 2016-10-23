@@ -13,6 +13,7 @@ namespace BL.Enemy_Classes
             Armor = ARMOR.Light;
             Health = 35;
             Damage = rnd.Next(1, 3);
+            Type = ENTITY_TYPE.Goblin;
         }
         public override int Hit(out string hit)
         {

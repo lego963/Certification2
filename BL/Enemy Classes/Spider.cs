@@ -13,6 +13,7 @@ namespace BL.Enemy_Classes
             Armor = ARMOR.Without;
             Health = 20;
             Damage = rnd.Next(5, 8);
+            Type = ENTITY_TYPE.Spider;
         }
         public override int Hit(out string hit)
         {
