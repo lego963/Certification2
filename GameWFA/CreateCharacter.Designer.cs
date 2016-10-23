@@ -95,7 +95,6 @@
             this.Controls.Add(this.nameLbl);
             this.Name = "CreateCharacter";
             this.Text = "CreateCharacter";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CreateCharacter_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

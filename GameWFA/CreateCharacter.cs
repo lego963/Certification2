@@ -47,14 +47,7 @@ namespace GameWFA
                     MessageBox.Show("You must choose a class for your character");
                     break;
             }
-
             Close();
-        }
-        private void CreateCharacter_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            MessageBox.Show("Hero was created");
-            MainForm mf = new MainForm();
-            mf.Creation(this);
         }
     }
 }

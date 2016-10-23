@@ -4,26 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Character_Classes
+namespace BL.Enemy_Classes
 {
-    public class Rogue : EntityHeroes
+    public class Goblin : EntityEnemies
     {
-        public Rogue() : base() { }
-        public Rogue(string name)
+        public Goblin() : base()
         {
-            Name = name;
-            Health = 75;
             Armor = ARMOR.Light;
-            Gold = 0;
-            Damage = rnd.Next(8, 10);
-            Class = ENTITY_CLASS.Rogue;
+            Health = 35;
+            Damage = rnd.Next(1, 3);
         }
-
         public override int Hit(out string hit)
         {
             int luck = rnd.Next(100);
             if (luck > 50) { hit = "Critical hit"; return Damage * 2; }
-            else { hit = "Hit"; return Damage; }
+            else return base.Hit(out hit);
         }
     }
 }

@@ -40,12 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Character Classes\Entity.cs" />
+    <Compile Include="Character Classes\EntityHeroes.cs" />
     <Compile Include="Character Classes\Knight.cs" />
     <Compile Include="Character Classes\Mage.cs" />
     <Compile Include="Character Classes\Rogue.cs" />
-    <Compile Include="Enemy Classes\Entity.cs" />
+    <Compile Include="Enemy Classes\EntityEnemies.cs" />
+    <Compile Include="Enemy Classes\Goblin.cs" />
+    <Compile Include="Enemy Classes\Golem.cs" />
+    <Compile Include="Enemy Classes\Spider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Workers\Worker.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BL.Character_Classes
 {
-    public class Mage : Entity
+    public class Mage : EntityHeroes
     {
         public Mage() : base() { }
         public Mage(string name) : base()
@@ -14,7 +14,9 @@ namespace BL.Character_Classes
             Name = name;
             Damage = rnd.Next(10, 15);
             Armor = ARMOR.Without;
+            Gold = 0;
             Health = 50;
+            Class = ENTITY_CLASS.Mage;
         }
 
         public override int Hit(out string hit)
