@@ -43,7 +43,6 @@
     <Compile Include="Character Classes\Entity.cs" />
     <Compile Include="Character Classes\Knight.cs" />
     <Compile Include="Character Classes\Mage.cs" />
-    <Compile Include="Character Classes\Player.cs" />
     <Compile Include="Character Classes\Rogue.cs" />
     <Compile Include="Enemy Classes\Entity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
