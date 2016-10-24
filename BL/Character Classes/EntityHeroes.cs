@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace BL.Character_Classes
         protected Random rnd;
 
         public string Name { get; protected set; }
+        public PointF StrtCoords { get; set; }
         public int Gold { get; set; }
         public int Health { get; protected set; }
         public int Damage { get; protected set; }

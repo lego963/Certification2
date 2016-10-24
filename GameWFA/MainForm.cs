@@ -24,7 +24,7 @@ namespace GameWFA
         private List<EntityEnemies> enemies;
         private List<Worker> workers;
         private int wave { get; set; }
-        Graphics g;
+        private Graphics g;
 
         public MainForm()
         {
@@ -68,7 +68,7 @@ namespace GameWFA
 
         private void gameTmr_Tick(object sender, EventArgs e)
         {
-            Thread.Sleep(150);
+            Thread.Sleep(100);
             UpdateCurrentStateLog();
             Mining();
             GameAndWaveCheck();
