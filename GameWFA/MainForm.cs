@@ -68,7 +68,7 @@ namespace GameWFA
 
         private void gameTmr_Tick(object sender, EventArgs e)
         {
-            Thread.Sleep(100);
+            //Thread.Sleep(100);
             UpdateCurrentStateLog();
             Mining();
             GameAndWaveCheck();
