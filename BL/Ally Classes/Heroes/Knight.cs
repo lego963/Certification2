@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BL.Character_Classes
 {
-    public class Knight : EntityHeroes
+    public class Knight : Entity
     {
         public Knight() : base() { }
         public Knight(string name) : base()
@@ -16,7 +16,7 @@ namespace BL.Character_Classes
             Armor = ARMOR.Heavy;
             Gold = 0;
             Health = 100;
-            Class = ENTITY_CLASS.Knight;
+            HeroClass = ENTITY_HERO_CLASS.Knight;
         }
 
         public override int Hit(out string hit)

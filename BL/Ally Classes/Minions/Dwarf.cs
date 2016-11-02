@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Enemy_Classes
+namespace BL.Character_Classes.Minions
 {
-    public class Golem : EntityEnemies
+    public class Dwarf : Entity
     {
-
-        public Golem() : base()
+        public Dwarf() : base()
         {
-            Armor = ARMOR.Heavy;
-            Health = 50;
-            Damage = rnd.Next(3, 5);
-            Type = ENTITY_TYPE.Golem;
+            Health = 25;
+            Armor = ARMOR.Medium;
+            Damage = rnd.Next(2, 4);
+            MinionClass = ENTITY_MINION_CLASS.Dwarf;
         }
+
         public override int Hit(out string hit)
         {
             return base.Hit(out hit);

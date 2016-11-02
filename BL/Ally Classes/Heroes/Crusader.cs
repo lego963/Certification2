@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace BL.Character_Classes
 {
-    public class Rogue : EntityHeroes
+    public class Crusader : Entity
     {
-        public Rogue() : base() { }
-        public Rogue(string name)
+        public Crusader() : base() { }
+        public Crusader(string name)
         {
             Name = name;
             Health = 75;
-            Armor = ARMOR.Light;
+            Armor = ARMOR.Hero;
             Gold = 0;
             Damage = rnd.Next(8, 10);
-            Class = ENTITY_CLASS.Rogue;
+            HeroClass = ENTITY_HERO_CLASS.Crusader;
         }
 
         public override int Hit(out string hit)

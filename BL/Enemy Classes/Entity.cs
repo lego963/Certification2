@@ -10,7 +10,7 @@ namespace BL.Enemy_Classes
     public enum ARMOR { Without = 0, Light = 10, Heavy = 25, Unknown = -1 };
     public enum ENTITY_TYPE { Goblin, Spider, Golem, Unknown = -1 };
 
-    public abstract class EntityEnemies
+    public abstract class Entity
     {
         protected Random rnd;
 
@@ -20,7 +20,7 @@ namespace BL.Enemy_Classes
         public ARMOR Armor { get; protected set; }
         public ENTITY_TYPE Type { get; protected set; }
 
-        public EntityEnemies()
+        public Entity()
         {
             rnd = new Random();
             Health = 0;

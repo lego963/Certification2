@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 
 namespace BL.Character_Classes
 {
-    public class Mage : EntityHeroes
+    public class Griffin : Entity
     {
-        public Mage() : base() { }
-        public Mage(string name) : base()
+        public Griffin() : base() { }
+        public Griffin(string name) : base()
         {
             Name = name;
             Damage = rnd.Next(10, 15);
-            Armor = ARMOR.Without;
+            Armor = ARMOR.Hero;
             Gold = 0;
             Health = 50;
-            Class = ENTITY_CLASS.Mage;
+            HeroClass = ENTITY_HERO_CLASS.Griffin;
         }
 
         public override int Hit(out string hit)
         {
-            int magicLuck = rnd.Next(100);
-            if (magicLuck > 66) { hit = "Magic crit"; return Damage * 2; }
+            int luck = rnd.Next(100);
+            if (luck > 50) { hit = "Critical hit"; return Damage * 2; }
             else { hit = "Hit"; return Damage; }
         }
     }

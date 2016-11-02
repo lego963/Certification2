@@ -20,8 +20,8 @@ namespace GameWFA
     {
         private const int SIZE = 3;
         private CreateCharacter cc;
-        private EntityHeroes player1;
-        private List<EntityEnemies> enemies;
+        private BL.Character_Classes.Entity player1;
+        private List<BL.Enemy_Classes.Entity> enemies;
         private List<Worker> workers;
         private int wave { get; set; }
         private Graphics g;
@@ -30,7 +30,7 @@ namespace GameWFA
         {
             InitializeComponent();
             SetState(GAME_STATE.INACTIVE);
-            enemies = new List<EntityEnemies>();
+            enemies = new List<BL.Enemy_Classes.Entity>();
             workers = new List<Worker>();
             wave = 1;
         }
@@ -47,13 +47,13 @@ namespace GameWFA
             {
                 switch (cc.eClass)
                 {
-                    case ENTITY_CLASS.Mage:
+                    case ENTITY_HERO_CLASS.Griffin:
                         player1 = cc._mage;
                         break;
-                    case ENTITY_CLASS.Knight:
+                    case ENTITY_HERO_CLASS.Knight:
                         player1 = cc._knight;
                         break;
-                    case ENTITY_CLASS.Rogue:
+                    case ENTITY_HERO_CLASS.Crusader:
                         player1 = cc._rogue;
                         break;
                 }
@@ -113,7 +113,7 @@ namespace GameWFA
         private void UpdateCurrentStateLog()
         {
             currentstatesLbl.Text = String.Format("Name: {0}\r\nClass: {1}\r\nHealth: {2}\r\nDamage: {3}\r\nArmorType: {4}\r\nGold: {5}",
-                player1.Name, player1.Class, player1.Health, player1.Damage, player1.Armor, player1.Gold);
+                player1.Name, player1.HeroClass, player1.Health, player1.Damage, player1.Armor, player1.Gold);
             waveLbl.Text = waveLbl.Text.Remove(5);
             waveLbl.Text += wave.ToString();
         }
@@ -136,7 +136,7 @@ namespace GameWFA
         private void WaveCreation()
         {
             enemies.Clear();
-            EntityEnemies ee;
+            BL.Enemy_Classes.Entity ee;
             Random rnd = new Random();
             for (int i = 0; i < SIZE * wave; i++)
             {

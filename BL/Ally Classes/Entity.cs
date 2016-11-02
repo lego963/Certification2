@@ -7,22 +7,24 @@ using System.Threading.Tasks;
 
 namespace BL.Character_Classes
 {
-    public enum ARMOR { Without = 0, Light = 10, Heavy = 25, Unknown = -1 };
-    public enum ENTITY_CLASS { Mage, Knight, Rogue, Unknown = -1 };
+    public enum ARMOR { Unarmored = 0, Light = 10, Medium = 25, Heavy = 25, Hero = 50, Unknown = -1 };
+    public enum ENTITY_HERO_CLASS { Griffin, Knight, Crusader, Unknown = -1 };
+    public enum ENTITY_MINION_CLASS { Dwarf, AirElemental, Gargoyle, Unknown = -1 };
 
-    public abstract class EntityHeroes
+    public abstract class Entity
     {
         protected Random rnd;
 
-        public string Name { get; protected set; }
+        public virtual string Name { get; protected set; }
         public PointF StrtCoords { get; set; }
-        public int Gold { get; set; }
+        public virtual int Gold { get; set; }
         public int Health { get; protected set; }
         public int Damage { get; protected set; }
         public ARMOR Armor { get; protected set; }
-        public ENTITY_CLASS Class { get; protected set; }
+        public virtual ENTITY_HERO_CLASS HeroClass { get; protected set; }
+        public virtual ENTITY_MINION_CLASS MinionClass { get; protected set; }
 
-        public EntityHeroes()
+        public Entity()
         {
             rnd = new Random();
             Name = String.Empty;
@@ -30,11 +32,12 @@ namespace BL.Character_Classes
             Health = 0;
             Damage = 0;
             Armor = ARMOR.Unknown;
-            Class = ENTITY_CLASS.Unknown;
+            HeroClass = ENTITY_HERO_CLASS.Unknown;
+            MinionClass = ENTITY_MINION_CLASS.Unknown;
         }
 
         public virtual int Hit(out string hit) { hit = "Hit"; return Damage; }
-        public void LevelUp(int cost)
+        public virtual void LevelUp(int cost)
         {
             Damage += Damage;
             Health += Health;

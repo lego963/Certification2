@@ -13,10 +13,10 @@ namespace GameWFA
 {
     public partial class CreateCharacter : Form
     {
-        public ENTITY_CLASS eClass { get; private set; }
-        public Mage _mage { get; private set; }
+        public ENTITY_HERO_CLASS eClass { get; private set; }
+        public Griffin _mage { get; private set; }
         public Knight _knight { get; private set; }
-        public Rogue _rogue { get; private set; }
+        public Crusader _rogue { get; private set; }
 
         public CreateCharacter()
         {
@@ -31,19 +31,19 @@ namespace GameWFA
             switch (classCmbB.Text)
             {
                 case "Mage":
-                    eClass = ENTITY_CLASS.Mage;
-                    _mage = new Mage(name);
+                    eClass = ENTITY_HERO_CLASS.Griffin;
+                    _mage = new Griffin(name);
                     break;
                 case "Knight":
-                    eClass = ENTITY_CLASS.Knight;
+                    eClass = ENTITY_HERO_CLASS.Knight;
                     _knight = new Knight(name);
                     break;
                 case "Rogue":
-                    eClass = ENTITY_CLASS.Rogue;
-                    _rogue = new Rogue(name);
+                    eClass = ENTITY_HERO_CLASS.Crusader;
+                    _rogue = new Crusader(name);
                     break;
                 default:
-                    eClass = ENTITY_CLASS.Unknown;
+                    eClass = ENTITY_HERO_CLASS.Unknown;
                     MessageBox.Show("You must choose a class for your character");
                     break;
             }
