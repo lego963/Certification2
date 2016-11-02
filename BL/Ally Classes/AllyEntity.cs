@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace BL.Character_Classes
 {
-    public enum ARMOR { Unarmored = 0, Light = 10, Medium = 25, Heavy = 25, Hero = 50, Unknown = -1 };
+    public enum ARMOR { Unarmored = 0, Light = 10, Medium = 15, Heavy = 20, Hero = 30, Unknown = -1 };
     public enum ENTITY_HERO_CLASS { Griffin, Knight, Crusader, Unknown = -1 };
     public enum ENTITY_MINION_CLASS { Dwarf, AirElemental, Gargoyle, Unknown = -1 };
 
-    public abstract class Entity
+    public abstract class AllyEntity
     {
         protected Random rnd;
 
@@ -24,7 +24,7 @@ namespace BL.Character_Classes
         public virtual ENTITY_HERO_CLASS HeroClass { get; protected set; }
         public virtual ENTITY_MINION_CLASS MinionClass { get; protected set; }
 
-        public Entity()
+        public AllyEntity()
         {
             rnd = new Random();
             Name = String.Empty;

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Character_Classes
+namespace BL.Character_Classes.Heroes
 {
-    public class Griffin : Entity
+    public class Griffin : AllyEntity
     {
         public Griffin() : base() { }
         public Griffin(string name) : base()

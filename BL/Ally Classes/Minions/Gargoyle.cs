@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BL.Character_Classes.Minions
 {
-    class Gargoyle : Entity
+    class Gargoyle : AllyEntity
     {
         public Gargoyle() : base()
         {

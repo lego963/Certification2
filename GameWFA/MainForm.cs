@@ -20,8 +20,8 @@ namespace GameWFA
     {
         private const int SIZE = 3;
         private CreateCharacter cc;
-        private BL.Character_Classes.Entity player1;
-        private List<BL.Enemy_Classes.Entity> enemies;
+        private BL.Character_Classes.AllyEntity player1;
+        private List<BL.Enemy_Classes.EnemyEntity> enemies;
         private List<Worker> workers;
         private int wave { get; set; }
         private Graphics g;
@@ -30,7 +30,7 @@ namespace GameWFA
         {
             InitializeComponent();
             SetState(GAME_STATE.INACTIVE);
-            enemies = new List<BL.Enemy_Classes.Entity>();
+            enemies = new List<BL.Enemy_Classes.EnemyEntity>();
             workers = new List<Worker>();
             wave = 1;
         }
@@ -47,13 +47,13 @@ namespace GameWFA
             {
                 switch (cc.eClass)
                 {
-                    case ENTITY_HERO_CLASS.Griffin:
+                    case BL.Character_Classes.ENTITY_HERO_CLASS.Griffin:
                         player1 = cc._mage;
                         break;
-                    case ENTITY_HERO_CLASS.Knight:
+                    case BL.Character_Classes.ENTITY_HERO_CLASS.Knight:
                         player1 = cc._knight;
                         break;
-                    case ENTITY_HERO_CLASS.Crusader:
+                    case BL.Character_Classes.ENTITY_HERO_CLASS.Crusader:
                         player1 = cc._rogue;
                         break;
                 }
@@ -136,21 +136,21 @@ namespace GameWFA
         private void WaveCreation()
         {
             enemies.Clear();
-            BL.Enemy_Classes.Entity ee;
+            BL.Enemy_Classes.EnemyEntity ee;
             Random rnd = new Random();
             for (int i = 0; i < SIZE * wave; i++)
             {
                 int creep = rnd.Next(0, 3);
-                ENTITY_TYPE et = (ENTITY_TYPE)creep;
+                BL.Enemy_Classes.ENTITY_MINION_CLASS_ENEMY et = (BL.Enemy_Classes.ENTITY_MINION_CLASS_ENEMY)creep;
                 switch (et)
                 {
-                    case ENTITY_TYPE.Goblin:
+                    case BL.Enemy_Classes.ENTITY_MINION_CLASS_ENEMY.Goblin:
                         ee = new Goblin();
                         break;
-                    case ENTITY_TYPE.Golem:
+                    case BL.Enemy_Classes.ENTITY_MINION_CLASS_ENEMY.Golem:
                         ee = new Golem();
                         break;
-                    case ENTITY_TYPE.Spider:
+                    case BL.Enemy_Classes.ENTITY_MINION_CLASS_ENEMY.Spider:
                         ee = new Spider();
                         break;
                     default:

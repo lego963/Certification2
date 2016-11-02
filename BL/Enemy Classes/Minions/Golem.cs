@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Enemy_Classes
+namespace BL.Enemy_Classes.Minions
 {
-    public class Golem : Entity
+    public class Golem : EnemyEntity
     {
 
         public Golem() : base()
@@ -14,7 +14,7 @@ namespace BL.Enemy_Classes
             Armor = ARMOR.Heavy;
             Health = 50;
             Damage = rnd.Next(3, 5);
-            Type = ENTITY_TYPE.Golem;
+            MinionClass = ENTITY_MINION_CLASS_ENEMY.Golem;
         }
         public override int Hit(out string hit)
         {

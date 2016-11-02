@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BL.Character_Classes.Minions
 {
-    public class AirElemental : Entity
+    public class AirElemental : AllyEntity
     {
         public AirElemental() : base()
         {

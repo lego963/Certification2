@@ -41,23 +41,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ally Classes\Entity.cs" />
+    <Compile Include="Ally Classes\AllyEntity.cs" />
     <Compile Include="Ally Classes\Heroes\Knight.cs" />
     <Compile Include="Ally Classes\Heroes\Griffin.cs" />
     <Compile Include="Ally Classes\Heroes\Crusader.cs" />
     <Compile Include="Ally Classes\Minions\AirElemental.cs" />
     <Compile Include="Ally Classes\Minions\Dwarf.cs" />
     <Compile Include="Ally Classes\Minions\Gargoyle.cs" />
-    <Compile Include="Enemy Classes\Entity.cs" />
+    <Compile Include="Enemy Classes\EnemyEntity.cs" />
+    <Compile Include="Enemy Classes\Heroes\Knight.cs" />
     <Compile Include="Enemy Classes\Minions\Goblin.cs" />
     <Compile Include="Enemy Classes\Minions\Golem.cs" />
     <Compile Include="Enemy Classes\Minions\Spider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Workers\Worker.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Enemy Classes\Heroes\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

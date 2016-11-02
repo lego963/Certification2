@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Enemy_Classes
+namespace BL.Enemy_Classes.Minions
 {
-    public class Goblin : Entity
+    public class Goblin : EnemyEntity
     {
         public Goblin() : base()
         {
             Armor = ARMOR.Light;
             Health = 35;
             Damage = rnd.Next(1, 3);
-            Type = ENTITY_TYPE.Goblin;
+            MinionClass = ENTITY_MINION_CLASS_ENEMY.Goblin;
         }
         public override int Hit(out string hit)
         {

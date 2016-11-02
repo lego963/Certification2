@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Character_Classes
+namespace BL.Character_Classes.Heroes
 {
-    public class Crusader : Entity
+    public class Crusader : AllyEntity
     {
         public Crusader() : base() { }
         public Crusader(string name)

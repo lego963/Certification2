@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Enemy_Classes
+namespace BL.Enemy_Classes.Minions
 {
-    public class Spider : Entity
+    public class Spider : EnemyEntity
     {
         public Spider() : base()
         {
-            Armor = ARMOR.Light;
+            Armor = ARMOR.Medium;
             Health = 20;
             Damage = rnd.Next(5, 8);
-            Type = ENTITY_TYPE.Spider;
+            MinionClass = ENTITY_MINION_CLASS_ENEMY.Spider;
         }
         public override int Hit(out string hit)
         {

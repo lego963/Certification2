@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BL.Character_Classes.Minions
 {
-    public class Dwarf : Entity
+    public class Dwarf : AllyEntity
     {
         public Dwarf() : base()
         {
