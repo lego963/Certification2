@@ -13,7 +13,7 @@ namespace BL.Character_Classes.Minions
             Health = 25;
             Armor = ARMOR.Unarmored;
             Damage = rnd.Next(2, 4);
-            MinionClass = ENTITY_MINION_CLASS.AirElemental;
+            MinionClass = ENTITY_MINION_CLASS_ALLY.AirElemental;
         }
 
         public override int Hit(out string hit)

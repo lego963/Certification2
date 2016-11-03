@@ -59,15 +59,5 @@ namespace GameWFA.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap b4e543d44f2f6fe7c3b16b3207c950d4 {
-            get {
-                object obj = ResourceManager.GetObject("b4e543d44f2f6fe7c3b16b3207c950d4", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }

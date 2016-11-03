@@ -16,7 +16,7 @@ namespace BL.Character_Classes.Heroes
             Armor = ARMOR.Hero;
             Gold = 0;
             Health = 50;
-            HeroClass = ENTITY_HERO_CLASS.Griffin;
+            HeroClass = ENTITY_HERO_CLASS_ALLY.Griffin;
         }
 
         public override int Hit(out string hit)

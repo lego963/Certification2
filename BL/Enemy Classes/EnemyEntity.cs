@@ -15,7 +15,7 @@ namespace BL.Enemy_Classes
     {
         protected Random rnd;
 
-        public PointF StrtCoords { get; set; }
+        public PointF Coords;
         public int Health { get; protected set; }
         public int Damage { get; protected set; }
         public ARMOR Armor { get; protected set; }

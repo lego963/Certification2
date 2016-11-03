@@ -35,11 +35,12 @@
             this.loaddataBtn = new System.Windows.Forms.Button();
             this.logLbl = new System.Windows.Forms.Label();
             this.logandbtnPnl = new System.Windows.Forms.Panel();
+            this.costLbl = new System.Windows.Forms.Label();
             this.currentstatesLbl = new System.Windows.Forms.Label();
             this.gamePnl = new System.Windows.Forms.Panel();
-            this.gameTmr = new System.Windows.Forms.Timer(this.components);
-            this.costLbl = new System.Windows.Forms.Label();
             this.waveLbl = new System.Windows.Forms.Label();
+            this.gameTmr = new System.Windows.Forms.Timer(this.components);
+            this.coordsLbl = new System.Windows.Forms.Label();
             this.logandbtnPnl.SuspendLayout();
             this.gamePnl.SuspendLayout();
             this.SuspendLayout();
@@ -98,6 +99,7 @@
             // 
             // logandbtnPnl
             // 
+            this.logandbtnPnl.Controls.Add(this.coordsLbl);
             this.logandbtnPnl.Controls.Add(this.costLbl);
             this.logandbtnPnl.Controls.Add(this.currentstatesLbl);
             this.logandbtnPnl.Controls.Add(this.loaddataBtn);
@@ -109,6 +111,15 @@
             this.logandbtnPnl.Name = "logandbtnPnl";
             this.logandbtnPnl.Size = new System.Drawing.Size(238, 637);
             this.logandbtnPnl.TabIndex = 5;
+            // 
+            // costLbl
+            // 
+            this.costLbl.AutoSize = true;
+            this.costLbl.Location = new System.Drawing.Point(174, 61);
+            this.costLbl.Name = "costLbl";
+            this.costLbl.Size = new System.Drawing.Size(34, 13);
+            this.costLbl.TabIndex = 7;
+            this.costLbl.Text = "Cost: ";
             // 
             // currentstatesLbl
             // 
@@ -128,19 +139,7 @@
             this.gamePnl.Name = "gamePnl";
             this.gamePnl.Size = new System.Drawing.Size(833, 637);
             this.gamePnl.TabIndex = 6;
-            // 
-            // gameTmr
-            // 
-            this.gameTmr.Tick += new System.EventHandler(this.gameTmr_Tick);
-            // 
-            // costLbl
-            // 
-            this.costLbl.AutoSize = true;
-            this.costLbl.Location = new System.Drawing.Point(174, 61);
-            this.costLbl.Name = "costLbl";
-            this.costLbl.Size = new System.Drawing.Size(34, 13);
-            this.costLbl.TabIndex = 7;
-            this.costLbl.Text = "Cost: ";
+            this.gamePnl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.gamePnl_MouseMove);
             // 
             // waveLbl
             // 
@@ -150,6 +149,19 @@
             this.waveLbl.Size = new System.Drawing.Size(42, 13);
             this.waveLbl.TabIndex = 0;
             this.waveLbl.Text = "Wave: ";
+            // 
+            // gameTmr
+            // 
+            this.gameTmr.Tick += new System.EventHandler(this.gameTmr_Tick);
+            // 
+            // coordsLbl
+            // 
+            this.coordsLbl.AutoSize = true;
+            this.coordsLbl.Location = new System.Drawing.Point(12, 576);
+            this.coordsLbl.Name = "coordsLbl";
+            this.coordsLbl.Size = new System.Drawing.Size(36, 13);
+            this.coordsLbl.TabIndex = 8;
+            this.coordsLbl.Text = "X: ; Y:";
             // 
             // MainForm
             // 
@@ -183,6 +195,7 @@
         private System.Windows.Forms.Timer gameTmr;
         private System.Windows.Forms.Label costLbl;
         private System.Windows.Forms.Label waveLbl;
+        private System.Windows.Forms.Label coordsLbl;
     }
 }
 

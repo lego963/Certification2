@@ -8,8 +8,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BL.Character_Classes.Heroes;
 using BL.Character_Classes;
+using BL.Character_Classes.Minions;
 using BL.Enemy_Classes;
+using BL.Enemy_Classes.Heroes;
+using BL.Enemy_Classes.Minions;
 using BL.Workers;
 
 namespace GameWFA
@@ -19,20 +23,27 @@ namespace GameWFA
     public partial class MainForm : Form
     {
         private const int SIZE = 3;
-        private CreateCharacter cc;
-        private BL.Character_Classes.AllyEntity player1;
-        private List<BL.Enemy_Classes.EnemyEntity> enemies;
-        private List<Worker> workers;
-        private int wave { get; set; }
+
         private Graphics g;
+        private Bitmap bm;
+        private CreateCharacter cc;
+        private AllyEntity allyHero;
+        private List<EnemyEntity> enemyMinions;
+        private List<Worker> workers;
+        private List<AllyEntity> allyMinions;
+        private int wave { get; set; }
+
 
         public MainForm()
         {
             InitializeComponent();
             SetState(GAME_STATE.INACTIVE);
-            enemies = new List<BL.Enemy_Classes.EnemyEntity>();
+            enemyMinions = new List<EnemyEntity>();
+            allyMinions = new List<AllyEntity>();
             workers = new List<Worker>();
             wave = 1;
+            g = gamePnl.CreateGraphics();
+            bm = new Bitmap(gamePnl.Width, gamePnl.Height, g);
         }
         private void createCharBtn_Click(object sender, EventArgs e)
         {
@@ -47,14 +58,17 @@ namespace GameWFA
             {
                 switch (cc.eClass)
                 {
-                    case BL.Character_Classes.ENTITY_HERO_CLASS.Griffin:
-                        player1 = cc._mage;
+                    case ENTITY_HERO_CLASS_ALLY.Griffin:
+                        allyHero = cc._griffin;
+                        allyHero.Coords = new PointF(500, 300);
                         break;
-                    case BL.Character_Classes.ENTITY_HERO_CLASS.Knight:
-                        player1 = cc._knight;
+                    case ENTITY_HERO_CLASS_ALLY.Knight:
+                        allyHero = cc._knight;
+                        allyHero.Coords = new PointF(500, 300);
                         break;
-                    case BL.Character_Classes.ENTITY_HERO_CLASS.Crusader:
-                        player1 = cc._rogue;
+                    case ENTITY_HERO_CLASS_ALLY.Crusader:
+                        allyHero = cc._crusader;
+                        allyHero.Coords = new PointF(500, 300);
                         break;
                 }
                 startBtn.Enabled = true;
@@ -63,15 +77,17 @@ namespace GameWFA
             {
                 MessageBox.Show("You didn't create hero");
             }
-
         }
 
         private void gameTmr_Tick(object sender, EventArgs e)
         {
-            //Thread.Sleep(100);
             UpdateCurrentStateLog();
             Mining();
-            GameAndWaveCheck();
+            //GameAndWaveCheck();
+            Thread.Sleep(300);
+
+            MoveEnemyMinions();
+            Draw();
         }
 
         private void startBtn_Click(object sender, EventArgs e)
@@ -79,8 +95,6 @@ namespace GameWFA
             SetState(GAME_STATE.RUNNING);
             CreateStartWorkers();
             WaveCreation();
-            g = gamePnl.CreateGraphics();
-            g.DrawImage(Properties.Resources.b4e543d44f2f6fe7c3b16b3207c950d4, 20, 20, 40, 40);
         }
         private void SetState(GAME_STATE state)
         {
@@ -113,7 +127,7 @@ namespace GameWFA
         private void UpdateCurrentStateLog()
         {
             currentstatesLbl.Text = String.Format("Name: {0}\r\nClass: {1}\r\nHealth: {2}\r\nDamage: {3}\r\nArmorType: {4}\r\nGold: {5}",
-                player1.Name, player1.HeroClass, player1.Health, player1.Damage, player1.Armor, player1.Gold);
+                allyHero.Name, allyHero.HeroClass, allyHero.Health, allyHero.Damage, allyHero.Armor, allyHero.Gold);
             waveLbl.Text = waveLbl.Text.Remove(5);
             waveLbl.Text += wave.ToString();
         }
@@ -130,57 +144,125 @@ namespace GameWFA
             foreach (var item in workers)
             {
                 item.Mining();
-                if (item.CurrentGold >= item.LoadCapacity) { player1.Gold += item.CurrentGold; item.CurrentGold = 0; }
+                if (item.CurrentGold >= item.LoadCapacity) { allyHero.Gold += item.CurrentGold; item.CurrentGold = 0; }
             }
         }
         private void WaveCreation()
         {
-            enemies.Clear();
-            BL.Enemy_Classes.EnemyEntity ee;
+            enemyMinions.Clear();
+            EnemyEntity ee;
             Random rnd = new Random();
             for (int i = 0; i < SIZE * wave; i++)
             {
                 int creep = rnd.Next(0, 3);
-                BL.Enemy_Classes.ENTITY_MINION_CLASS_ENEMY et = (BL.Enemy_Classes.ENTITY_MINION_CLASS_ENEMY)creep;
+                ENTITY_MINION_CLASS_ENEMY et = (ENTITY_MINION_CLASS_ENEMY)creep;
                 switch (et)
                 {
-                    case BL.Enemy_Classes.ENTITY_MINION_CLASS_ENEMY.Goblin:
+                    case ENTITY_MINION_CLASS_ENEMY.Goblin:
                         ee = new Goblin();
+                        ee.Coords = new PointF(10, 100);
                         break;
-                    case BL.Enemy_Classes.ENTITY_MINION_CLASS_ENEMY.Golem:
+                    case ENTITY_MINION_CLASS_ENEMY.Golem:
                         ee = new Golem();
+                        ee.Coords = new PointF(10, 300);
                         break;
-                    case BL.Enemy_Classes.ENTITY_MINION_CLASS_ENEMY.Spider:
+                    case ENTITY_MINION_CLASS_ENEMY.Spider:
                         ee = new Spider();
+                        ee.Coords = new PointF(10, 500);
                         break;
                     default:
-                        ee = new Goblin();
+                        ee = null;
                         break;
                 }
-                enemies.Add(ee);
+                enemyMinions.Add(ee);
+                Draw();
             }
         }
         private void levelupBtn_Click(object sender, EventArgs e)
         {
             int cost = Convert.ToInt32(costLbl.Text.Substring(5));
-            if (player1.Gold >= cost) { player1.LevelUp(cost); costLbl.Text = costLbl.Text.Remove(5); costLbl.Text += (cost * 2).ToString(); }
+            if (allyHero.Gold >= cost) { allyHero.LevelUp(cost); costLbl.Text = costLbl.Text.Remove(5); costLbl.Text += (cost * 2).ToString(); }
             else MessageBox.Show("You dont have enough gold to level up");
         }
-        private void GameAndWaveCheck()
+        //private void GameAndWaveCheck()
+        //{
+        //    if (allyHero.Health <= 0)
+        //    {
+        //        SetState(GAME_STATE.GAME_OVER);
+        //    }
+        //    bool waveUp = false;
+        //    for (int i = 0; i < SIZE * wave; i++)
+        //    {
+        //        if (enemyMinions[i].Health <= 0 && i + 1 == SIZE * wave)
+        //        {
+        //            waveUp = true;
+        //        }
+        //    }
+        //    if (waveUp) wave++;
+        //}
+        private void Draw()
         {
-            if (player1.Health <= 0)
+            if (bm != null)
             {
-                SetState(GAME_STATE.GAME_OVER);
-            }
-            bool waveUp = false;
-            for (int i = 0; i < SIZE * wave; i++)
-            {
-                if (enemies[i].Health <= 0 && i + 1 == SIZE * wave)
+                using (Graphics g0 = Graphics.FromImage(bm))
                 {
-                    waveUp = true;
+                    ReDraw(g0);
+                }
+                g.DrawImage(bm, ClientRectangle);
+            }
+        }
+        private void ReDraw(Graphics g)
+        {
+            g.Clear(DefaultBackColor);
+            foreach (var item in enemyMinions)
+            {
+                g.FillRectangle(new SolidBrush(Color.Black), item.Coords.X, item.Coords.Y, 20, 20);
+            }
+            g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 100), new PointF(500, 500));
+            g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 300), new PointF(500, 500));
+            g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 500), new PointF(500, 500));
+            g.FillRectangle(new SolidBrush(Color.Red), allyHero.Coords.X, allyHero.Coords.Y, 40, 40);
+        }
+        private void MoveEnemyMinions()
+        {
+            foreach (var item in enemyMinions)
+            {
+                switch (item.MinionClass)
+                {
+                    case ENTITY_MINION_CLASS_ENEMY.Goblin:
+                        item.Coords.X += 98;
+                        item.Coords.Y += 80;
+                        break;
+                    case ENTITY_MINION_CLASS_ENEMY.Spider:
+                        item.Coords.X += 98;
+                        item.Coords.Y += 0;
+                        break;
+                    case ENTITY_MINION_CLASS_ENEMY.Golem:
+                        item.Coords.X += 98;
+                        item.Coords.Y += 40;
+                        break;
                 }
             }
-            if (waveUp) wave++;
+        }
+        private void MoveAllyMinions()
+        {
+            foreach (var item in allyMinions)
+            {
+                switch (item.MinionClass)
+                {
+                    case ENTITY_MINION_CLASS_ALLY.Dwarf:
+                        break;
+                    case ENTITY_MINION_CLASS_ALLY.AirElemental:
+                        break;
+                    case ENTITY_MINION_CLASS_ALLY.Gargoyle:
+                        break;
+                }
+            }
+        }
+
+        private void gamePnl_MouseMove(object sender, MouseEventArgs e)
+        {
+            coordsLbl.Text = String.Format("X: {0}; Y: {1}", e.X, e.Y);
         }
     }
 }

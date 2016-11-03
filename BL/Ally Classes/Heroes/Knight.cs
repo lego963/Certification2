@@ -16,7 +16,7 @@ namespace BL.Character_Classes.Heroes
             Armor = ARMOR.Heavy;
             Gold = 0;
             Health = 100;
-            HeroClass = ENTITY_HERO_CLASS.Knight;
+            HeroClass = ENTITY_HERO_CLASS_ALLY.Knight;
         }
 
         public override int Hit(out string hit)

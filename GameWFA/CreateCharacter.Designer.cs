@@ -55,9 +55,9 @@
             // 
             this.classCmbB.FormattingEnabled = true;
             this.classCmbB.Items.AddRange(new object[] {
-            "Mage",
+            "Griffin",
             "Knight",
-            "Rogue"});
+            "Crusader"});
             this.classCmbB.Location = new System.Drawing.Point(100, 104);
             this.classCmbB.Name = "classCmbB";
             this.classCmbB.Size = new System.Drawing.Size(227, 21);

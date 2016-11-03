@@ -13,7 +13,7 @@ namespace BL.Character_Classes.Minions
             Health = 25;
             Armor = ARMOR.Medium;
             Damage = rnd.Next(2, 4);
-            MinionClass = ENTITY_MINION_CLASS.Dwarf;
+            MinionClass = ENTITY_MINION_CLASS_ALLY.Dwarf;
         }
 
         public override int Hit(out string hit)
