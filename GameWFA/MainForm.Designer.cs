@@ -35,12 +35,14 @@
             this.loaddataBtn = new System.Windows.Forms.Button();
             this.logLbl = new System.Windows.Forms.Label();
             this.logandbtnPnl = new System.Windows.Forms.Panel();
+            this.coordsLbl = new System.Windows.Forms.Label();
             this.costLbl = new System.Windows.Forms.Label();
             this.currentstatesLbl = new System.Windows.Forms.Label();
             this.gamePnl = new System.Windows.Forms.Panel();
             this.waveLbl = new System.Windows.Forms.Label();
             this.gameTmr = new System.Windows.Forms.Timer(this.components);
-            this.coordsLbl = new System.Windows.Forms.Label();
+            this.buyMinionBtn = new System.Windows.Forms.Button();
+            this.minionCostLbl = new System.Windows.Forms.Label();
             this.logandbtnPnl.SuspendLayout();
             this.gamePnl.SuspendLayout();
             this.SuspendLayout();
@@ -67,7 +69,7 @@
             // 
             // levelupBtn
             // 
-            this.levelupBtn.Location = new System.Drawing.Point(93, 56);
+            this.levelupBtn.Location = new System.Drawing.Point(12, 93);
             this.levelupBtn.Name = "levelupBtn";
             this.levelupBtn.Size = new System.Drawing.Size(75, 23);
             this.levelupBtn.TabIndex = 2;
@@ -91,7 +93,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.logLbl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.logLbl.Location = new System.Drawing.Point(12, 102);
+            this.logLbl.Location = new System.Drawing.Point(12, 148);
             this.logLbl.Name = "logLbl";
             this.logLbl.Size = new System.Drawing.Size(220, 170);
             this.logLbl.TabIndex = 4;
@@ -99,6 +101,8 @@
             // 
             // logandbtnPnl
             // 
+            this.logandbtnPnl.Controls.Add(this.minionCostLbl);
+            this.logandbtnPnl.Controls.Add(this.buyMinionBtn);
             this.logandbtnPnl.Controls.Add(this.coordsLbl);
             this.logandbtnPnl.Controls.Add(this.costLbl);
             this.logandbtnPnl.Controls.Add(this.currentstatesLbl);
@@ -112,19 +116,28 @@
             this.logandbtnPnl.Size = new System.Drawing.Size(238, 637);
             this.logandbtnPnl.TabIndex = 5;
             // 
+            // coordsLbl
+            // 
+            this.coordsLbl.AutoSize = true;
+            this.coordsLbl.Location = new System.Drawing.Point(12, 576);
+            this.coordsLbl.Name = "coordsLbl";
+            this.coordsLbl.Size = new System.Drawing.Size(36, 13);
+            this.coordsLbl.TabIndex = 8;
+            this.coordsLbl.Text = "X: ; Y:";
+            // 
             // costLbl
             // 
             this.costLbl.AutoSize = true;
-            this.costLbl.Location = new System.Drawing.Point(174, 61);
+            this.costLbl.Location = new System.Drawing.Point(93, 98);
             this.costLbl.Name = "costLbl";
-            this.costLbl.Size = new System.Drawing.Size(34, 13);
+            this.costLbl.Size = new System.Drawing.Size(79, 13);
             this.costLbl.TabIndex = 7;
-            this.costLbl.Text = "Cost: ";
+            this.costLbl.Text = "Level Up cost: ";
             // 
             // currentstatesLbl
             // 
             this.currentstatesLbl.AutoSize = true;
-            this.currentstatesLbl.Location = new System.Drawing.Point(12, 291);
+            this.currentstatesLbl.Location = new System.Drawing.Point(12, 318);
             this.currentstatesLbl.Name = "currentstatesLbl";
             this.currentstatesLbl.Size = new System.Drawing.Size(69, 13);
             this.currentstatesLbl.TabIndex = 6;
@@ -154,14 +167,24 @@
             // 
             this.gameTmr.Tick += new System.EventHandler(this.gameTmr_Tick);
             // 
-            // coordsLbl
+            // buyMinionBtn
             // 
-            this.coordsLbl.AutoSize = true;
-            this.coordsLbl.Location = new System.Drawing.Point(12, 576);
-            this.coordsLbl.Name = "coordsLbl";
-            this.coordsLbl.Size = new System.Drawing.Size(36, 13);
-            this.coordsLbl.TabIndex = 8;
-            this.coordsLbl.Text = "X: ; Y:";
+            this.buyMinionBtn.Location = new System.Drawing.Point(12, 122);
+            this.buyMinionBtn.Name = "buyMinionBtn";
+            this.buyMinionBtn.Size = new System.Drawing.Size(75, 23);
+            this.buyMinionBtn.TabIndex = 9;
+            this.buyMinionBtn.Text = "Buy minion";
+            this.buyMinionBtn.UseVisualStyleBackColor = true;
+            this.buyMinionBtn.Click += new System.EventHandler(this.buyMinionBtn_Click);
+            // 
+            // minionCostLbl
+            // 
+            this.minionCostLbl.AutoSize = true;
+            this.minionCostLbl.Location = new System.Drawing.Point(92, 127);
+            this.minionCostLbl.Name = "minionCostLbl";
+            this.minionCostLbl.Size = new System.Drawing.Size(64, 13);
+            this.minionCostLbl.TabIndex = 10;
+            this.minionCostLbl.Text = "Minion cost:";
             // 
             // MainForm
             // 
@@ -196,6 +219,8 @@
         private System.Windows.Forms.Label costLbl;
         private System.Windows.Forms.Label waveLbl;
         private System.Windows.Forms.Label coordsLbl;
+        private System.Windows.Forms.Label minionCostLbl;
+        private System.Windows.Forms.Button buyMinionBtn;
     }
 }
 

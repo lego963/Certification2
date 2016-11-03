@@ -33,7 +33,6 @@ namespace GameWFA
         private List<AllyEntity> allyMinions;
         private int wave { get; set; }
 
-
         public MainForm()
         {
             InitializeComponent();
@@ -44,6 +43,7 @@ namespace GameWFA
             wave = 1;
             g = gamePnl.CreateGraphics();
             bm = new Bitmap(gamePnl.Width, gamePnl.Height, g);
+            minionCostLbl.Text += "150";
         }
         private void createCharBtn_Click(object sender, EventArgs e)
         {
@@ -86,7 +86,7 @@ namespace GameWFA
             //GameAndWaveCheck();
             Thread.Sleep(300);
 
-            MoveEnemyMinions();
+            MoveObjects();
             Draw();
         }
 
@@ -95,6 +95,7 @@ namespace GameWFA
             SetState(GAME_STATE.RUNNING);
             CreateStartWorkers();
             WaveCreation();
+            CreateStartAlly();
         }
         private void SetState(GAME_STATE state)
         {
@@ -218,51 +219,166 @@ namespace GameWFA
             {
                 g.FillRectangle(new SolidBrush(Color.Black), item.Coords.X, item.Coords.Y, 20, 20);
             }
+            foreach (var item in allyMinions)
+            {
+                g.FillRectangle(new SolidBrush(Color.Blue), item.Coords.X, item.Coords.Y, 20, 20);
+            }
             g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 100), new PointF(500, 500));
             g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 300), new PointF(500, 500));
             g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 500), new PointF(500, 500));
             g.FillRectangle(new SolidBrush(Color.Red), allyHero.Coords.X, allyHero.Coords.Y, 40, 40);
         }
-        private void MoveEnemyMinions()
+        private void MoveObjects()
         {
-            foreach (var item in enemyMinions)
+            foreach (var item in enemyMinions.ToArray())
             {
+                FindAim(item);
                 switch (item.MinionClass)
                 {
                     case ENTITY_MINION_CLASS_ENEMY.Goblin:
-                        item.Coords.X += 98;
-                        item.Coords.Y += 80;
+                        item.Coords.X += 9.8F;
+                        item.Coords.Y += 8.0F;
                         break;
                     case ENTITY_MINION_CLASS_ENEMY.Spider:
-                        item.Coords.X += 98;
-                        item.Coords.Y += 0;
+                        item.Coords.X += 9.8F;
+                        item.Coords.Y += 0.0F;
                         break;
                     case ENTITY_MINION_CLASS_ENEMY.Golem:
-                        item.Coords.X += 98;
-                        item.Coords.Y += 40;
+                        item.Coords.X += 9.8F;
+                        item.Coords.Y += 4.0F;
                         break;
                 }
             }
-        }
-        private void MoveAllyMinions()
-        {
-            foreach (var item in allyMinions)
+            foreach (var item in allyMinions.ToArray())
             {
+                FindAim(item);
                 switch (item.MinionClass)
                 {
                     case ENTITY_MINION_CLASS_ALLY.Dwarf:
+                        if (item.Coords != new PointF(475, 450))
+                        {
+                            item.Coords.X += 35F;
+                            item.Coords.Y += 0.0F;
+                        }
                         break;
                     case ENTITY_MINION_CLASS_ALLY.AirElemental:
+                        if (item.Coords != new PointF(475, 450))
+                        {
+                            item.Coords.X += 35F;
+                            item.Coords.Y += 10.0F;
+                        }
                         break;
                     case ENTITY_MINION_CLASS_ALLY.Gargoyle:
+                        if (item.Coords != new PointF(475, 450))
+                        {
+                            item.Coords.X += 35F;
+                            item.Coords.Y += 5.0F;
+                        }
+                        break; //475 450
+                }
+            }
+        }
+        private void CreateStartAlly()
+        {
+            AllyEntity ae;
+            Random rnd = new Random();
+            for (int i = 0; i < SIZE - 1; i++)
+            {
+                int creep = rnd.Next(0, 3);
+                ENTITY_MINION_CLASS_ALLY et = (ENTITY_MINION_CLASS_ALLY)creep;
+                switch (et)
+                {
+                    case ENTITY_MINION_CLASS_ALLY.AirElemental:
+                        ae = new AirElemental();
+                        ae.Coords = new PointF(300, 400);
                         break;
+                    case ENTITY_MINION_CLASS_ALLY.Dwarf:
+                        ae = new Dwarf();
+                        ae.Coords = new PointF(300, 450);
+                        break;
+                    case ENTITY_MINION_CLASS_ALLY.Gargoyle:
+                        ae = new Gargoyle();
+                        ae.Coords = new PointF(300, 425);
+                        break;
+                    default:
+                        ae = null;
+                        break;
+                }
+                allyMinions.Add(ae);
+            }
+            Draw();
+        }
+        private void gamePnl_MouseMove(object sender, MouseEventArgs e)
+        {
+            coordsLbl.Text = String.Format("X: {0}; Y: {1}", e.X, e.Y);
+        }
+        private void FindAim(EnemyEntity enemy)
+        {
+            foreach (var item in allyMinions.ToArray())
+            {
+                double distance = Math.Sqrt(Math.Pow(enemy.Coords.X - item.Coords.X, 2) + Math.Pow(enemy.Coords.Y - item.Coords.Y, 2));
+                if (distance < 50)
+                {
+                    do
+                    {
+                        item.Health -= enemy.Damage;
+                        enemy.Health -= item.Damage;
+                    } while (item.Health > 0 && enemy.Health > 0);
+                    if (item.Health <= 0) allyMinions.Remove(item);
+                    else enemyMinions.Remove(enemy);
+                    break;
+                }
+            }
+        }
+        private void FindAim(AllyEntity ally)
+        {
+            foreach (var item in enemyMinions.ToArray())
+            {
+                double distance = Math.Sqrt(Math.Pow(ally.Coords.X - item.Coords.X, 2) + Math.Pow(ally.Coords.Y - item.Coords.Y, 2));
+                if (distance < 50)
+                {
+                    do
+                    {
+                        item.Health -= ally.Damage;
+                        ally.Health -= item.Damage;
+                    } while (item.Health > 0 && ally.Health > 0);
+                    if (item.Health <= 0) enemyMinions.Remove(item);
+                    else allyMinions.Remove(ally);
+                    break;
                 }
             }
         }
 
-        private void gamePnl_MouseMove(object sender, MouseEventArgs e)
+        private void buyMinionBtn_Click(object sender, EventArgs e)
         {
-            coordsLbl.Text = String.Format("X: {0}; Y: {1}", e.X, e.Y);
+            if (allyHero.Gold < 150) MessageBox.Show("Ti uporotiy chtoli suka ?");
+            else
+            {
+                AllyEntity ae;
+                Random rnd = new Random();
+                int creep = rnd.Next(0, 3);
+                ENTITY_MINION_CLASS_ALLY et = (ENTITY_MINION_CLASS_ALLY)creep;
+                switch (et)
+                {
+                    case ENTITY_MINION_CLASS_ALLY.AirElemental:
+                        ae = new AirElemental();
+                        ae.Coords = new PointF(300, 400);
+                        break;
+                    case ENTITY_MINION_CLASS_ALLY.Dwarf:
+                        ae = new Dwarf();
+                        ae.Coords = new PointF(300, 450);
+                        break;
+                    case ENTITY_MINION_CLASS_ALLY.Gargoyle:
+                        ae = new Gargoyle();
+                        ae.Coords = new PointF(300, 425);
+                        break;
+                    default:
+                        ae = null;
+                        break;
+                }
+                allyMinions.Add(ae);
+                Draw();
+            }
         }
     }
 }

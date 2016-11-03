@@ -17,6 +17,7 @@ namespace BL.Character_Classes.Heroes
             Gold = 0;
             Damage = rnd.Next(8, 10);
             HeroClass = ENTITY_HERO_CLASS_ALLY.Crusader;
+            MoveFight = true;
         }
 
         public override int Hit(out string hit)

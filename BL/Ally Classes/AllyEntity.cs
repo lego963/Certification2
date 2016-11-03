@@ -16,13 +16,14 @@ namespace BL.Character_Classes
         protected Random rnd;
 
         public virtual string Name { get; protected set; }
-        public PointF Coords { get; set; }
+        public PointF Coords;
         public virtual int Gold { get; set; }
-        public int Health { get; protected set; }
+        public int Health { get; set; }
         public int Damage { get; protected set; }
         public ARMOR Armor { get; protected set; }
         public virtual ENTITY_HERO_CLASS_ALLY HeroClass { get; protected set; }
         public virtual ENTITY_MINION_CLASS_ALLY MinionClass { get; protected set; }
+        public bool MoveFight { get; set; }
 
         public AllyEntity()
         {
@@ -34,6 +35,7 @@ namespace BL.Character_Classes
             Armor = ARMOR.Unknown;
             HeroClass = ENTITY_HERO_CLASS_ALLY.Unknown;
             MinionClass = ENTITY_MINION_CLASS_ALLY.Unknown;
+            MoveFight = false;
         }
 
         public virtual int Hit(out string hit) { hit = "Hit"; return Damage; }

@@ -14,6 +14,7 @@ namespace BL.Enemy_Classes.Minions
             Health = 20;
             Damage = rnd.Next(5, 8);
             MinionClass = ENTITY_MINION_CLASS_ENEMY.Spider;
+            MoveFight = true;
         }
         public override int Hit(out string hit)
         {
