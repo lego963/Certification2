@@ -14,6 +14,7 @@ namespace BL.Character_Classes.Minions
             Armor = ARMOR.Heavy;
             Damage = rnd.Next(2, 4);
             MinionClass = ENTITY_MINION_CLASS_ALLY.Gargoyle;
+            MoveFight = false;
         }
 
         public override int Hit(out string hit)

@@ -24,6 +24,7 @@ namespace BL.Character_Classes
         public virtual ENTITY_HERO_CLASS_ALLY HeroClass { get; protected set; }
         public virtual ENTITY_MINION_CLASS_ALLY MinionClass { get; protected set; }
         public bool MoveFight { get; set; }
+        public int LaneMove { get; set; }
 
         public AllyEntity()
         {
@@ -36,6 +37,7 @@ namespace BL.Character_Classes
             HeroClass = ENTITY_HERO_CLASS_ALLY.Unknown;
             MinionClass = ENTITY_MINION_CLASS_ALLY.Unknown;
             MoveFight = false;
+            LaneMove = -1;
         }
 
         public virtual int Hit(out string hit) { hit = "Hit"; return Damage; }

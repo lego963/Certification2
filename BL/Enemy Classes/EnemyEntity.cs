@@ -17,6 +17,7 @@ namespace BL.Enemy_Classes
 
         public bool MoveFight { get; set; }
         public PointF Coords;
+        public int LaneMove { get; set; }
         public int Health { get; set; }
         public int Damage { get; protected set; }
         public ARMOR Armor { get; protected set; }
@@ -32,6 +33,7 @@ namespace BL.Enemy_Classes
             MinionClass = ENTITY_MINION_CLASS_ENEMY.Unknown;
             HeroClass = ENTITY_HERO_CLASS_ENEMY.Unknown;
             MoveFight = false;
+            LaneMove = -1;
         }
 
         public virtual int Hit(out string hit) { hit = "Hit"; return Damage; }

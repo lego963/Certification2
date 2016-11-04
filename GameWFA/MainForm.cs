@@ -31,7 +31,7 @@ namespace GameWFA
         private List<EnemyEntity> enemyMinions;
         private List<Worker> workers;
         private List<AllyEntity> allyMinions;
-        private int wave { get; set; }
+        private int timer;
 
         public MainForm()
         {
@@ -40,10 +40,10 @@ namespace GameWFA
             enemyMinions = new List<EnemyEntity>();
             allyMinions = new List<AllyEntity>();
             workers = new List<Worker>();
-            wave = 1;
             g = gamePnl.CreateGraphics();
             bm = new Bitmap(gamePnl.Width, gamePnl.Height, g);
             minionCostLbl.Text += "150";
+            timer = 0;
         }
         private void createCharBtn_Click(object sender, EventArgs e)
         {
@@ -60,18 +60,20 @@ namespace GameWFA
                 {
                     case ENTITY_HERO_CLASS_ALLY.Griffin:
                         allyHero = cc._griffin;
-                        allyHero.Coords = new PointF(500, 300);
+                        allyHero.Coords = new PointF(700, 300);
                         break;
                     case ENTITY_HERO_CLASS_ALLY.Knight:
                         allyHero = cc._knight;
-                        allyHero.Coords = new PointF(500, 300);
+                        allyHero.Coords = new PointF(700, 300);
                         break;
                     case ENTITY_HERO_CLASS_ALLY.Crusader:
                         allyHero = cc._crusader;
-                        allyHero.Coords = new PointF(500, 300);
+                        allyHero.Coords = new PointF(700, 300);
                         break;
                 }
                 startBtn.Enabled = true;
+                logLbl.Text = String.Empty;
+                logLbl.Text += "You have created hero\r\n";
             }
             catch (NullReferenceException)
             {
@@ -83,8 +85,10 @@ namespace GameWFA
         {
             UpdateCurrentStateLog();
             Mining();
+            timer++;
+            if (timer++ % 15 == 0) CreateEnemyMinion();
             //GameAndWaveCheck();
-            Thread.Sleep(300);
+            //Thread.Sleep(300);
 
             MoveObjects();
             Draw();
@@ -94,8 +98,8 @@ namespace GameWFA
         {
             SetState(GAME_STATE.RUNNING);
             CreateStartWorkers();
-            WaveCreation();
-            CreateStartAlly();
+            CreateAllyMinion();
+            logLbl.Text += "Game started\r\n";
         }
         private void SetState(GAME_STATE state)
         {
@@ -127,10 +131,8 @@ namespace GameWFA
         }
         private void UpdateCurrentStateLog()
         {
-            currentstatesLbl.Text = String.Format("Name: {0}\r\nClass: {1}\r\nHealth: {2}\r\nDamage: {3}\r\nArmorType: {4}\r\nGold: {5}",
-                allyHero.Name, allyHero.HeroClass, allyHero.Health, allyHero.Damage, allyHero.Armor, allyHero.Gold);
-            waveLbl.Text = waveLbl.Text.Remove(5);
-            waveLbl.Text += wave.ToString();
+            currentstatesLbl.Text = String.Format("Name: {0}\r\nClass: {1}\r\nHealth: {2}\r\nDamage: {3}\r\nArmorType: {4}\r\nGold: {5}\r\nYou have {6} minions",
+                allyHero.Name, allyHero.HeroClass, allyHero.Health, allyHero.Damage, allyHero.Armor, allyHero.Gold, allyMinions.Count);
         }
         private void CreateStartWorkers()
         {
@@ -148,41 +150,61 @@ namespace GameWFA
                 if (item.CurrentGold >= item.LoadCapacity) { allyHero.Gold += item.CurrentGold; item.CurrentGold = 0; }
             }
         }
-        private void WaveCreation()
+        private void CreateEnemyMinion()
         {
-            enemyMinions.Clear();
             EnemyEntity ee;
             Random rnd = new Random();
-            for (int i = 0; i < SIZE * wave; i++)
+            int creep = rnd.Next(0, 3);
+            int lane = rnd.Next(1, 4);
+            ENTITY_MINION_CLASS_ENEMY et = (ENTITY_MINION_CLASS_ENEMY)creep;
+            switch (et)
             {
-                int creep = rnd.Next(0, 3);
-                ENTITY_MINION_CLASS_ENEMY et = (ENTITY_MINION_CLASS_ENEMY)creep;
-                switch (et)
-                {
-                    case ENTITY_MINION_CLASS_ENEMY.Goblin:
-                        ee = new Goblin();
-                        ee.Coords = new PointF(10, 100);
-                        break;
-                    case ENTITY_MINION_CLASS_ENEMY.Golem:
-                        ee = new Golem();
-                        ee.Coords = new PointF(10, 300);
-                        break;
-                    case ENTITY_MINION_CLASS_ENEMY.Spider:
-                        ee = new Spider();
-                        ee.Coords = new PointF(10, 500);
-                        break;
-                    default:
-                        ee = null;
-                        break;
-                }
-                enemyMinions.Add(ee);
-                Draw();
+                case ENTITY_MINION_CLASS_ENEMY.Goblin:
+                    ee = new Goblin();
+                    ee.Coords = CreateStartCoords(lane, ee);
+                    ee.LaneMove = lane;
+                    break;
+                case ENTITY_MINION_CLASS_ENEMY.Golem:
+                    ee = new Golem();
+                    ee.Coords = CreateStartCoords(lane, ee);
+                    ee.LaneMove = lane;
+                    break;
+                case ENTITY_MINION_CLASS_ENEMY.Spider:
+                    ee = new Spider();
+                    ee.Coords = CreateStartCoords(lane, ee);
+                    ee.LaneMove = lane;
+                    break;
+                default:
+                    ee = null;
+                    break;
             }
+            enemyMinions.Add(ee);
+            Draw();
+        }
+        private PointF CreateStartCoords(int Lane, EnemyEntity ee)
+        {
+            PointF startCoords;
+            switch (Lane)
+            {
+                case 1:
+                    startCoords = new PointF(10, 100);
+                    break;
+                case 2:
+                    startCoords = new PointF(10, 300);
+                    break;
+                case 3:
+                    startCoords = new PointF(10, 500);
+                    break;
+                default:
+                    startCoords = new PointF();
+                    break;
+            }
+            return startCoords;
         }
         private void levelupBtn_Click(object sender, EventArgs e)
         {
-            int cost = Convert.ToInt32(costLbl.Text.Substring(5));
-            if (allyHero.Gold >= cost) { allyHero.LevelUp(cost); costLbl.Text = costLbl.Text.Remove(5); costLbl.Text += (cost * 2).ToString(); }
+            int cost = Convert.ToInt32(costLbl.Text.Substring(15));
+            if (allyHero.Gold >= cost) { allyHero.LevelUp(cost); costLbl.Text = costLbl.Text.Remove(15); costLbl.Text += (cost * 2).ToString(); }
             else MessageBox.Show("You dont have enough gold to level up");
         }
         //private void GameAndWaveCheck()
@@ -226,159 +248,142 @@ namespace GameWFA
             g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 100), new PointF(500, 500));
             g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 300), new PointF(500, 500));
             g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 500), new PointF(500, 500));
-            g.FillRectangle(new SolidBrush(Color.Red), allyHero.Coords.X, allyHero.Coords.Y, 40, 40);
         }
         private void MoveObjects()
         {
             foreach (var item in enemyMinions.ToArray())
             {
-                FindAim(item);
-                switch (item.MinionClass)
-                {
-                    case ENTITY_MINION_CLASS_ENEMY.Goblin:
-                        item.Coords.X += 9.8F;
-                        item.Coords.Y += 8.0F;
-                        break;
-                    case ENTITY_MINION_CLASS_ENEMY.Spider:
-                        item.Coords.X += 9.8F;
-                        item.Coords.Y += 0.0F;
-                        break;
-                    case ENTITY_MINION_CLASS_ENEMY.Golem:
-                        item.Coords.X += 9.8F;
-                        item.Coords.Y += 4.0F;
-                        break;
-                }
+                if (!FindAim(item) && !item.MoveFight)
+                    switch (item.LaneMove)
+                    {
+                        case 1:
+                            item.Coords.X += 49F;
+                            item.Coords.Y += 40F;
+                            break;
+                        case 2:
+                            item.Coords.X += 49F;
+                            item.Coords.Y += 20F;
+                            break;
+                        case 3:
+                            item.Coords.X += 49F;
+                            item.Coords.Y += 0F;
+                            break;
+                    }
             }
             foreach (var item in allyMinions.ToArray())
             {
-                FindAim(item);
-                switch (item.MinionClass)
-                {
-                    case ENTITY_MINION_CLASS_ALLY.Dwarf:
-                        if (item.Coords != new PointF(475, 450))
-                        {
-                            item.Coords.X += 35F;
-                            item.Coords.Y += 0.0F;
-                        }
-                        break;
-                    case ENTITY_MINION_CLASS_ALLY.AirElemental:
-                        if (item.Coords != new PointF(475, 450))
-                        {
-                            item.Coords.X += 35F;
-                            item.Coords.Y += 10.0F;
-                        }
-                        break;
-                    case ENTITY_MINION_CLASS_ALLY.Gargoyle:
-                        if (item.Coords != new PointF(475, 450))
-                        {
-                            item.Coords.X += 35F;
-                            item.Coords.Y += 5.0F;
-                        }
-                        break; //475 450
-                }
+                if (!FindAim(item) && !item.MoveFight)
+                    switch (item.MinionClass)
+                    {
+                        case ENTITY_MINION_CLASS_ALLY.Dwarf:
+                            if (item.Coords != new PointF(475, 450))
+                            {
+                                item.Coords.X -= 35F;
+                                item.Coords.Y += 30.0F;
+                            }
+                            break;
+                        case ENTITY_MINION_CLASS_ALLY.AirElemental:
+                            if (item.Coords != new PointF(475, 450))
+                            {
+                                item.Coords.X -= 35F;
+                                item.Coords.Y += 30.0F;
+                            }
+                            break;
+                        case ENTITY_MINION_CLASS_ALLY.Gargoyle:
+                            if (item.Coords != new PointF(475, 450))
+                            {
+                                item.Coords.X -= 35F;
+                                item.Coords.Y += 30.0F;
+                            }
+                            break;
+                    }
             }
         }
-        private void CreateStartAlly()
+
+
+        private void CreateAllyMinion()
         {
             AllyEntity ae;
             Random rnd = new Random();
-            for (int i = 0; i < SIZE - 1; i++)
+            int creep = rnd.Next(0, 3);
+            ENTITY_MINION_CLASS_ALLY et = (ENTITY_MINION_CLASS_ALLY)creep;
+            switch (et)
             {
-                int creep = rnd.Next(0, 3);
-                ENTITY_MINION_CLASS_ALLY et = (ENTITY_MINION_CLASS_ALLY)creep;
-                switch (et)
-                {
-                    case ENTITY_MINION_CLASS_ALLY.AirElemental:
-                        ae = new AirElemental();
-                        ae.Coords = new PointF(300, 400);
-                        break;
-                    case ENTITY_MINION_CLASS_ALLY.Dwarf:
-                        ae = new Dwarf();
-                        ae.Coords = new PointF(300, 450);
-                        break;
-                    case ENTITY_MINION_CLASS_ALLY.Gargoyle:
-                        ae = new Gargoyle();
-                        ae.Coords = new PointF(300, 425);
-                        break;
-                    default:
-                        ae = null;
-                        break;
-                }
-                allyMinions.Add(ae);
+                case ENTITY_MINION_CLASS_ALLY.AirElemental:
+                    ae = new AirElemental();
+                    ae.Coords = new PointF(650, 300);
+                    break;
+                case ENTITY_MINION_CLASS_ALLY.Dwarf:
+                    ae = new Dwarf();
+                    ae.Coords = new PointF(650, 300);
+                    break;
+                case ENTITY_MINION_CLASS_ALLY.Gargoyle:
+                    ae = new Gargoyle();
+                    ae.Coords = new PointF(650, 300);
+                    break;
+                default:
+                    ae = null;
+                    break;
             }
+            allyMinions.Add(ae);
             Draw();
         }
+
+
         private void gamePnl_MouseMove(object sender, MouseEventArgs e)
         {
             coordsLbl.Text = String.Format("X: {0}; Y: {1}", e.X, e.Y);
         }
-        private void FindAim(EnemyEntity enemy)
+
+
+        private bool FindAim(EnemyEntity enemy)
         {
             foreach (var item in allyMinions.ToArray())
             {
                 double distance = Math.Sqrt(Math.Pow(enemy.Coords.X - item.Coords.X, 2) + Math.Pow(enemy.Coords.Y - item.Coords.Y, 2));
                 if (distance < 50)
                 {
-                    do
-                    {
-                        item.Health -= enemy.Damage;
-                        enemy.Health -= item.Damage;
-                    } while (item.Health > 0 && enemy.Health > 0);
-                    if (item.Health <= 0) allyMinions.Remove(item);
-                    else enemyMinions.Remove(enemy);
-                    break;
+                    item.MoveFight = true;
+                    enemy.MoveFight = true;
+                    string s;
+                    item.Health -= enemy.Hit(out s);
+                    if (item.Health <= 0) { allyMinions.Remove(item); enemy.MoveFight = false; }
+                    enemy.Health -= item.Hit(out s);
+                    if (enemy.Health <= 0) { enemyMinions.Remove(enemy); item.MoveFight = false; }
+                    return true;
                 }
             }
+            enemy.MoveFight = false;
+            return false;
         }
-        private void FindAim(AllyEntity ally)
+        private bool FindAim(AllyEntity ally)
         {
             foreach (var item in enemyMinions.ToArray())
             {
                 double distance = Math.Sqrt(Math.Pow(ally.Coords.X - item.Coords.X, 2) + Math.Pow(ally.Coords.Y - item.Coords.Y, 2));
                 if (distance < 50)
                 {
-                    do
-                    {
-                        item.Health -= ally.Damage;
-                        ally.Health -= item.Damage;
-                    } while (item.Health > 0 && ally.Health > 0);
-                    if (item.Health <= 0) enemyMinions.Remove(item);
-                    else allyMinions.Remove(ally);
-                    break;
+                    item.MoveFight = true;
+                    ally.MoveFight = true;
+                    string s;
+                    item.Health -= ally.Hit(out s);
+                    logLbl.Text += String.Format("Ally minion {0} {1}\r\n", ally.MinionClass, s);
+                    if (item.Health <= 0) { enemyMinions.Remove(item); ally.MoveFight = false; logLbl.Text += "Ally minion killed enemy minion\r\n"; }
+                    ally.Health -= item.Hit(out s);
+                    logLbl.Text += String.Format("Enemy minion {0} {1}\r\n", ally.MinionClass, s);
+                    if (ally.Health <= 0) { allyMinions.Remove(ally); item.MoveFight = false; logLbl.Text += "Enemy minion killed ally minion\r\n"; }
+                    return true;
                 }
             }
+            ally.MoveFight = false;
+            return false;
         }
+
 
         private void buyMinionBtn_Click(object sender, EventArgs e)
         {
             if (allyHero.Gold < 150) MessageBox.Show("Ti uporotiy chtoli suka ?");
-            else
-            {
-                AllyEntity ae;
-                Random rnd = new Random();
-                int creep = rnd.Next(0, 3);
-                ENTITY_MINION_CLASS_ALLY et = (ENTITY_MINION_CLASS_ALLY)creep;
-                switch (et)
-                {
-                    case ENTITY_MINION_CLASS_ALLY.AirElemental:
-                        ae = new AirElemental();
-                        ae.Coords = new PointF(300, 400);
-                        break;
-                    case ENTITY_MINION_CLASS_ALLY.Dwarf:
-                        ae = new Dwarf();
-                        ae.Coords = new PointF(300, 450);
-                        break;
-                    case ENTITY_MINION_CLASS_ALLY.Gargoyle:
-                        ae = new Gargoyle();
-                        ae.Coords = new PointF(300, 425);
-                        break;
-                    default:
-                        ae = null;
-                        break;
-                }
-                allyMinions.Add(ae);
-                Draw();
-            }
+            else { CreateAllyMinion(); allyHero.Gold -= 150; logLbl.Text += "You have bought one minion\r\n"; }
         }
     }
 }

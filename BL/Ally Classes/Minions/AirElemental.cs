@@ -14,6 +14,7 @@ namespace BL.Character_Classes.Minions
             Armor = ARMOR.Unarmored;
             Damage = rnd.Next(2, 4);
             MinionClass = ENTITY_MINION_CLASS_ALLY.AirElemental;
+            MoveFight = false;
         }
 
         public override int Hit(out string hit)
