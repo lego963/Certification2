@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BL.Character_Classes.Heroes
+﻿namespace BL.Character_Classes.Heroes
 {
     public class Crusader : AllyEntity
     {
@@ -17,7 +11,7 @@ namespace BL.Character_Classes.Heroes
             Gold = 0;
             Damage = rnd.Next(8, 10);
             HeroClass = ENTITY_HERO_CLASS_ALLY.Crusader;
-            MoveFight = false;
+            MoveFight = ACTION.Move;
         }
 
         public override int Hit(out string hit)

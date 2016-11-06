@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 
 namespace BL.Workers
 {
@@ -14,6 +11,7 @@ namespace BL.Workers
         public int Health { get; private set; }
         public int CurrentGold { get; set; }
         public int gold { get; protected set; }
+        public PointF Coords;
 
         public Worker()
         {

@@ -1,24 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using BL.Character_Classes.Heroes;
 using BL.Character_Classes;
 using BL.Character_Classes.Minions;
 using BL.Enemy_Classes;
-using BL.Enemy_Classes.Heroes;
 using BL.Enemy_Classes.Minions;
 using BL.Workers;
 
 namespace GameWFA
 {
-    public enum GAME_STATE { RUNNING, INACTIVE, GAME_OVER };
+    public enum GAME_STATE { RUNNING, INACTIVE, PAUSE, GAME_OVER };
 
     public partial class MainForm : Form
     {
@@ -42,7 +34,6 @@ namespace GameWFA
             workers = new List<Worker>();
             g = gamePnl.CreateGraphics();
             bm = new Bitmap(gamePnl.Width, gamePnl.Height, g);
-            minionCostLbl.Text += "150";
             timer = 0;
         }
         private void createCharBtn_Click(object sender, EventArgs e)
@@ -72,6 +63,8 @@ namespace GameWFA
                         break;
                 }
                 startBtn.Enabled = true;
+                createCharBtn.Enabled = false;
+                loaddataBtn.Enabled = false;
                 logLbl.Text = String.Empty;
                 logLbl.Text += "You have created hero\r\n";
             }
@@ -97,8 +90,7 @@ namespace GameWFA
         private void startBtn_Click(object sender, EventArgs e)
         {
             SetState(GAME_STATE.RUNNING);
-            CreateStartWorkers();
-            CreateAllyMinion();
+            if (workers.Capacity == 0) { CreateStartWorkers(); CreateAllyMinion(); }
             logLbl.Text += "Game started\r\n";
         }
         private void SetState(GAME_STATE state)
@@ -111,6 +103,8 @@ namespace GameWFA
                     createCharBtn.Enabled = false;
                     loaddataBtn.Enabled = false;
                     gameTmr.Enabled = true;
+                    buyMinionBtn.Enabled = true;
+                    pauseBtn.Enabled = true;
                     break;
                 case GAME_STATE.INACTIVE:
                     startBtn.Enabled = false;
@@ -118,7 +112,8 @@ namespace GameWFA
                     gameTmr.Enabled = false;
                     createCharBtn.Enabled = true;
                     loaddataBtn.Enabled = false;
-                    costLbl.Text += 300.ToString();
+                    buyMinionBtn.Enabled = false;
+                    pauseBtn.Enabled = false;
                     break;
                 case GAME_STATE.GAME_OVER:
                     startBtn.Enabled = false;
@@ -126,6 +121,15 @@ namespace GameWFA
                     levelupBtn.Enabled = false;
                     createCharBtn.Enabled = true;
                     loaddataBtn.Enabled = false;
+                    break;
+                case GAME_STATE.PAUSE:
+                    gameTmr.Stop();
+                    buyMinionBtn.Enabled = false;
+                    levelupBtn.Enabled = false;
+                    createCharBtn.Enabled = false;
+                    loaddataBtn.Enabled = false;
+                    startBtn.Enabled = true;
+                    pauseBtn.Enabled = false;
                     break;
             }
         }
@@ -205,7 +209,7 @@ namespace GameWFA
         {
             int cost = Convert.ToInt32(costLbl.Text.Substring(15));
             if (allyHero.Gold >= cost) { allyHero.LevelUp(cost); costLbl.Text = costLbl.Text.Remove(15); costLbl.Text += (cost * 2).ToString(); }
-            else MessageBox.Show("You dont have enough gold to level up");
+            else logLbl.Text += "You don't hane enough money to level up your hero\r\n";
         }
         //private void GameAndWaveCheck()
         //{
@@ -245,34 +249,62 @@ namespace GameWFA
             {
                 g.FillRectangle(new SolidBrush(Color.Blue), item.Coords.X, item.Coords.Y, 20, 20);
             }
-            g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 100), new PointF(500, 500));
-            g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 300), new PointF(500, 500));
-            g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 500), new PointF(500, 500));
+            g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 100), new PointF(500, 750));
+            g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 300), new PointF(500, 750));
+            g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 500), new PointF(500, 750));
+            g.DrawEllipse(new Pen(Color.Black), 450, 700, 100, 100);
         }
         private void MoveObjects()
         {
             foreach (var item in enemyMinions.ToArray())
             {
-                if (!FindAim(item) && !item.MoveFight)
-                    switch (item.LaneMove)
+                if (!FindAim(item) && item.MoveFight != BL.Enemy_Classes.ACTION.Fight)
+                    if (item.CheckPoints[0] == false)
                     {
-                        case 1:
-                            item.Coords.X += 49F;
-                            item.Coords.Y += 40F;
-                            break;
-                        case 2:
-                            item.Coords.X += 49F;
-                            item.Coords.Y += 20F;
-                            break;
-                        case 3:
-                            item.Coords.X += 49F;
-                            item.Coords.Y += 0F;
-                            break;
+                        switch (item.LaneMove)
+                        {
+                            case 1:
+                                item.Coords.X += 49F;
+                                item.Coords.Y += 65F;
+                                if (item.Coords == new PointF(500, 750)) item.CheckPoints[0] = true;
+                                break;
+                            case 2:
+                                item.Coords.X += 49F;
+                                item.Coords.Y += 45F;
+                                if (item.Coords == new PointF(500, 750)) item.CheckPoints[0] = true;
+                                break;
+                            case 3:
+                                item.Coords.X += 49F;
+                                item.Coords.Y += 25F;
+                                if (item.Coords == new PointF(500, 750)) item.CheckPoints[0] = true;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        switch (item.LaneMove)
+                        {
+                            case 1:
+                                item.Coords.X += 30F;
+                                item.Coords.Y -= 55F;
+                                if (item.Coords == new PointF(800, 200)) item.CheckPoints[1] = true;
+                                break;
+                            case 2:
+                                item.Coords.X += 30F;
+                                item.Coords.Y -= 55F;
+                                if (item.Coords == new PointF(800, 200)) item.CheckPoints[1] = true;
+                                break;
+                            case 3:
+                                item.Coords.X += 30F;
+                                item.Coords.Y -= 55F;
+                                if (item.Coords == new PointF(800, 200)) item.CheckPoints[1] = true;
+                                break;
+                        }
                     }
             }
             foreach (var item in allyMinions.ToArray())
             {
-                if (!FindAim(item) && !item.MoveFight)
+                if (!FindAim(item) && item.MoveFight != BL.Character_Classes.ACTION.Fight)
                     switch (item.MinionClass)
                     {
                         case ENTITY_MINION_CLASS_ALLY.Dwarf:
@@ -343,17 +375,17 @@ namespace GameWFA
                 double distance = Math.Sqrt(Math.Pow(enemy.Coords.X - item.Coords.X, 2) + Math.Pow(enemy.Coords.Y - item.Coords.Y, 2));
                 if (distance < 50)
                 {
-                    item.MoveFight = true;
-                    enemy.MoveFight = true;
+                    item.MoveFight = BL.Character_Classes.ACTION.Fight;
+                    enemy.MoveFight = BL.Enemy_Classes.ACTION.Fight;
                     string s;
                     item.Health -= enemy.Hit(out s);
-                    if (item.Health <= 0) { allyMinions.Remove(item); enemy.MoveFight = false; }
+                    if (item.Health <= 0) { allyMinions.Remove(item); enemy.MoveFight = BL.Enemy_Classes.ACTION.Move; return false; }
                     enemy.Health -= item.Hit(out s);
-                    if (enemy.Health <= 0) { enemyMinions.Remove(enemy); item.MoveFight = false; }
+                    if (enemy.Health <= 0) { enemyMinions.Remove(enemy); item.MoveFight = BL.Character_Classes.ACTION.Move; return false; }
                     return true;
                 }
             }
-            enemy.MoveFight = false;
+            enemy.MoveFight = BL.Enemy_Classes.ACTION.Move;
             return false;
         }
         private bool FindAim(AllyEntity ally)
@@ -363,27 +395,38 @@ namespace GameWFA
                 double distance = Math.Sqrt(Math.Pow(ally.Coords.X - item.Coords.X, 2) + Math.Pow(ally.Coords.Y - item.Coords.Y, 2));
                 if (distance < 50)
                 {
-                    item.MoveFight = true;
-                    ally.MoveFight = true;
+                    item.MoveFight = BL.Enemy_Classes.ACTION.Fight;
+                    ally.MoveFight = BL.Character_Classes.ACTION.Fight;
                     string s;
                     item.Health -= ally.Hit(out s);
                     logLbl.Text += String.Format("Ally minion {0} {1}\r\n", ally.MinionClass, s);
-                    if (item.Health <= 0) { enemyMinions.Remove(item); ally.MoveFight = false; logLbl.Text += "Ally minion killed enemy minion\r\n"; }
+                    if (item.Health <= 0) { enemyMinions.Remove(item); ally.MoveFight = BL.Character_Classes.ACTION.Move; logLbl.Text += "Ally minion killed enemy minion\r\n"; }
                     ally.Health -= item.Hit(out s);
                     logLbl.Text += String.Format("Enemy minion {0} {1}\r\n", ally.MinionClass, s);
-                    if (ally.Health <= 0) { allyMinions.Remove(ally); item.MoveFight = false; logLbl.Text += "Enemy minion killed ally minion\r\n"; }
+                    if (ally.Health <= 0) { allyMinions.Remove(ally); item.MoveFight = BL.Enemy_Classes.ACTION.Move; logLbl.Text += "Enemy minion killed ally minion\r\n"; }
                     return true;
                 }
             }
-            ally.MoveFight = false;
+            ally.MoveFight = BL.Character_Classes.ACTION.Move;
             return false;
         }
 
 
         private void buyMinionBtn_Click(object sender, EventArgs e)
         {
-            if (allyHero.Gold < 150) MessageBox.Show("Ti uporotiy chtoli suka ?");
+            if (allyHero.Gold < 150) logLbl.Text += "You don't have enough money\r\n";
             else { CreateAllyMinion(); allyHero.Gold -= 150; logLbl.Text += "You have bought one minion\r\n"; }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            minionCostLbl.Text += 150.ToString();
+            costLbl.Text += 300.ToString();
+        }
+
+        private void pauseBtn_Click(object sender, EventArgs e)
+        {
+            SetState(GAME_STATE.PAUSE);
         }
     }
 }

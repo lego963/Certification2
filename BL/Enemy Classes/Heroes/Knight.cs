@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BL.Enemy_Classes.Heroes
+﻿namespace BL.Enemy_Classes.Heroes
 {
     public class Knight : EnemyEntity
     {
@@ -12,7 +6,7 @@ namespace BL.Enemy_Classes.Heroes
         {
             Armor = ARMOR.Hero;
             Damage = rnd.Next(10,25);
-            MoveFight = false;
+            MoveFight = ACTION.Move;
             Health = 100;
             HeroClass = ENTITY_HERO_CLASS_ENEMY.Knight;
         }

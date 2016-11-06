@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ally Classes\AllyEntity.cs" />
+    <Compile Include="Ally Classes\Buildings\Core.cs" />
+    <Compile Include="Ally Classes\Buildings\Mine.cs" />
     <Compile Include="Ally Classes\Heroes\Knight.cs" />
     <Compile Include="Ally Classes\Heroes\Griffin.cs" />
     <Compile Include="Ally Classes\Heroes\Crusader.cs" />

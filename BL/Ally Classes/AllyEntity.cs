@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Drawing;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL.Character_Classes
 {
     public enum ARMOR { Unarmored = 0, Light = 10, Medium = 15, Heavy = 20, Hero = 30, Unknown = -1 };
     public enum ENTITY_HERO_CLASS_ALLY { Griffin, Knight, Crusader, Unknown = -1 };
     public enum ENTITY_MINION_CLASS_ALLY { Dwarf, AirElemental, Gargoyle, Unknown = -1 };
+    public enum ACTION { Move, Fight, Unknown };
 
     public abstract class AllyEntity
     {
@@ -23,7 +20,7 @@ namespace BL.Character_Classes
         public ARMOR Armor { get; protected set; }
         public virtual ENTITY_HERO_CLASS_ALLY HeroClass { get; protected set; }
         public virtual ENTITY_MINION_CLASS_ALLY MinionClass { get; protected set; }
-        public bool MoveFight { get; set; }
+        public ACTION MoveFight { get; set; }
         public int LaneMove { get; set; }
 
         public AllyEntity()
@@ -36,11 +33,11 @@ namespace BL.Character_Classes
             Armor = ARMOR.Unknown;
             HeroClass = ENTITY_HERO_CLASS_ALLY.Unknown;
             MinionClass = ENTITY_MINION_CLASS_ALLY.Unknown;
-            MoveFight = false;
+            MoveFight = ACTION.Unknown;
             LaneMove = -1;
         }
 
-        public virtual int Hit(out string hit) { hit = "Hit"; return Damage; }
+        public virtual int Hit(out string hit) { hit = "hit"; return Damage; }
         public virtual void LevelUp(int cost)
         {
             Damage += Damage;
