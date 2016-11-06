@@ -7,6 +7,7 @@ using BL.Character_Classes.Minions;
 using BL.Enemy_Classes;
 using BL.Enemy_Classes.Minions;
 using BL.Workers;
+using System.Threading;
 
 namespace GameWFA
 {
@@ -39,9 +40,9 @@ namespace GameWFA
         }
         private void createCharBtn_Click(object sender, EventArgs e)
         {
-
             cc.Show();
             loaddataBtn.Enabled = true;
+            createCharBtn.Enabled = false;
         }
 
         private void loaddataBtn_Click(object sender, EventArgs e)
@@ -82,7 +83,7 @@ namespace GameWFA
             timer++;
             if (timer++ % 15 == 0) CreateEnemyMinion();
             //GameAndWaveCheck();
-            //Thread.Sleep(300);
+            Thread.Sleep(50);
 
             MoveObjects();
             Draw();
@@ -244,15 +245,28 @@ namespace GameWFA
             g.Clear(DefaultBackColor);
             foreach (var item in enemyMinions)
             {
-                g.FillRectangle(new SolidBrush(Color.Black), item.Coords.X, item.Coords.Y, 20, 20);
+                g.FillRectangle(new SolidBrush(Color.Red), item.Coords.X, item.Coords.Y, 10, 10);
             }
             foreach (var item in allyMinions)
             {
-                g.FillRectangle(new SolidBrush(Color.Blue), item.Coords.X, item.Coords.Y, 20, 20);
+                switch (item.MinionClass)
+                {
+                    case ENTITY_MINION_CLASS_ALLY.Dwarf:
+                        g.DrawImage(Properties.Resources.Dwarf, item.Coords);
+                        break;
+                    case ENTITY_MINION_CLASS_ALLY.AirElemental:
+                        g.DrawImage(Properties.Resources.Air_Elemental, item.Coords);
+                        break;
+                    case ENTITY_MINION_CLASS_ALLY.Gargoyle:
+                        g.DrawImage(Properties.Resources.Gargoyle, item.Coords);
+                        break;
+                }
             }
+            g.DrawImageUnscaled(Properties.Resources.Castle, 725, 0);
             g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 100), new PointF(500, 750));
             g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 300), new PointF(500, 750));
             g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 500), new PointF(500, 750));
+            g.DrawLine(new Pen(Color.DarkCyan), new PointF(500, 750), new PointF(800, 200));
             g.DrawEllipse(new Pen(Color.Black), 450, 700, 100, 100);
         }
         private void MoveObjects()
@@ -281,7 +295,7 @@ namespace GameWFA
                                 break;
                         }
                     }
-                    else
+                    else if (item.CheckPoints[1] == false)
                     {
                         switch (item.LaneMove)
                         {
@@ -309,30 +323,29 @@ namespace GameWFA
                     switch (item.MinionClass)
                     {
                         case ENTITY_MINION_CLASS_ALLY.Dwarf:
-                            if (item.Coords != new PointF(475, 450))
+                            if (item.Coords != new PointF(500, 750))
                             {
                                 item.Coords.X -= 35F;
-                                item.Coords.Y += 30.0F;
+                                item.Coords.Y += 55.0F;
                             }
                             break;
                         case ENTITY_MINION_CLASS_ALLY.AirElemental:
-                            if (item.Coords != new PointF(475, 450))
+                            if (item.Coords != new PointF(500, 750))
                             {
-                                item.Coords.X -= 35F;
-                                item.Coords.Y += 30.0F;
+                                item.Coords.X -= 30F;
+                                item.Coords.Y += 55.0F;
                             }
                             break;
                         case ENTITY_MINION_CLASS_ALLY.Gargoyle:
-                            if (item.Coords != new PointF(475, 450))
+                            if (item.Coords != new PointF(500, 750))
                             {
-                                item.Coords.X -= 35F;
-                                item.Coords.Y += 30.0F;
+                                item.Coords.X -= 25F;
+                                item.Coords.Y += 55.0F;
                             }
                             break;
                     }
             }
         }
-
 
         private void CreateAllyMinion()
         {
@@ -344,15 +357,15 @@ namespace GameWFA
             {
                 case ENTITY_MINION_CLASS_ALLY.AirElemental:
                     ae = new AirElemental();
-                    ae.Coords = new PointF(650, 300);
+                    ae.Coords = new PointF(800, 200);
                     break;
                 case ENTITY_MINION_CLASS_ALLY.Dwarf:
                     ae = new Dwarf();
-                    ae.Coords = new PointF(650, 300);
+                    ae.Coords = new PointF(850, 200);
                     break;
                 case ENTITY_MINION_CLASS_ALLY.Gargoyle:
                     ae = new Gargoyle();
-                    ae.Coords = new PointF(650, 300);
+                    ae.Coords = new PointF(750, 200);
                     break;
                 default:
                     ae = null;
@@ -368,13 +381,12 @@ namespace GameWFA
             coordsLbl.Text = String.Format("X: {0}; Y: {1}", e.X, e.Y);
         }
 
-
         private bool FindAim(EnemyEntity enemy)
         {
             foreach (var item in allyMinions.ToArray())
             {
                 double distance = Math.Sqrt(Math.Pow(enemy.Coords.X - item.Coords.X, 2) + Math.Pow(enemy.Coords.Y - item.Coords.Y, 2));
-                if (distance < 50)
+                if (distance <= 50)
                 {
                     item.MoveFight = BL.Character_Classes.ACTION.Fight;
                     enemy.MoveFight = BL.Enemy_Classes.ACTION.Fight;
@@ -394,7 +406,7 @@ namespace GameWFA
             foreach (var item in enemyMinions.ToArray())
             {
                 double distance = Math.Sqrt(Math.Pow(ally.Coords.X - item.Coords.X, 2) + Math.Pow(ally.Coords.Y - item.Coords.Y, 2));
-                if (distance < 50)
+                if (distance <= 50)
                 {
                     item.MoveFight = BL.Enemy_Classes.ACTION.Fight;
                     ally.MoveFight = BL.Character_Classes.ACTION.Fight;
