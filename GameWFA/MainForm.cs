@@ -243,6 +243,7 @@ namespace GameWFA
         private void ReDraw(Graphics g)
         {
             g.Clear(DefaultBackColor);
+
             foreach (var item in enemyMinions)
             {
                 g.FillRectangle(new SolidBrush(Color.Red), item.Coords.X, item.Coords.Y, 10, 10);
