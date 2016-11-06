@@ -18,10 +18,10 @@ namespace GameWFA
 
         private Graphics g;
         private Bitmap bm;
-        private CreateCharacter cc;
         private AllyEntity allyHero;
         private List<EnemyEntity> enemyMinions;
         private List<Worker> workers;
+        private CreateCharacter cc;
         private List<AllyEntity> allyMinions;
         private int timer;
 
@@ -35,10 +35,11 @@ namespace GameWFA
             g = gamePnl.CreateGraphics();
             bm = new Bitmap(gamePnl.Width, gamePnl.Height, g);
             timer = 0;
+            cc = new CreateCharacter(this);
         }
         private void createCharBtn_Click(object sender, EventArgs e)
         {
-            cc = new CreateCharacter();
+
             cc.Show();
             loaddataBtn.Enabled = true;
         }

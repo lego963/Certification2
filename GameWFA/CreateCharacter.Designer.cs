@@ -66,7 +66,7 @@
             // 
             // createBtn
             // 
-            this.createBtn.Location = new System.Drawing.Point(135, 256);
+            this.createBtn.Location = new System.Drawing.Point(128, 213);
             this.createBtn.Name = "createBtn";
             this.createBtn.Size = new System.Drawing.Size(75, 23);
             this.createBtn.TabIndex = 3;
@@ -87,7 +87,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(344, 291);
+            this.ClientSize = new System.Drawing.Size(344, 248);
             this.Controls.Add(this.classLbl);
             this.Controls.Add(this.createBtn);
             this.Controls.Add(this.classCmbB);
@@ -95,6 +95,7 @@
             this.Controls.Add(this.nameLbl);
             this.Name = "CreateCharacter";
             this.Text = "CreateCharacter";
+            this.Load += new System.EventHandler(this.CreateCharacter_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

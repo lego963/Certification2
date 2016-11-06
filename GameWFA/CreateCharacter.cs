@@ -11,10 +11,12 @@ namespace GameWFA
         public Griffin _griffin { get; private set; }
         public Knight _knight { get; private set; }
         public Crusader _crusader { get; private set; }
+        MainForm mf;
 
-        public CreateCharacter()
+        public CreateCharacter(MainForm mf)
         {
             InitializeComponent();
+            this.mf = mf;
         }
 
         private void createBtn_Click(object sender, EventArgs e)
@@ -41,7 +43,12 @@ namespace GameWFA
                     MessageBox.Show("You must choose a class for your character");
                     break;
             }
-            Close();
+            if (eClass != ENTITY_HERO_CLASS_ALLY.Unknown) { Close(); mf.Enabled = true; }
+        }
+
+        private void CreateCharacter_Load(object sender, EventArgs e)
+        {
+            mf.Enabled = false;
         }
     }
 }
