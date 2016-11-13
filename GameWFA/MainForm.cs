@@ -6,8 +6,8 @@ using BL.Character_Classes;
 using BL.Character_Classes.Minions;
 using BL.Enemy_Classes;
 using BL.Enemy_Classes.Minions;
+using System.Media;
 using BL.Workers;
-using System.Threading;
 
 namespace GameWFA
 {
@@ -82,8 +82,7 @@ namespace GameWFA
             Mining();
             timer++;
             if (timer++ % 15 == 0) CreateEnemyMinion();
-            //GameAndWaveCheck();
-            Thread.Sleep(50);
+            GameAndWaveCheck();
 
             MoveObjects();
             Draw();
@@ -123,6 +122,11 @@ namespace GameWFA
                     levelupBtn.Enabled = false;
                     createCharBtn.Enabled = true;
                     loaddataBtn.Enabled = false;
+                    gameTmr.Stop();
+                    g.Clear(Color.White);
+                    SoundPlayer loseAudio = new SoundPlayer(Properties.Resources.Lose);
+                    loseAudio.Play();
+                    g.DrawImage(Properties.Resources.GameOver, 175, -50);
                     break;
                 case GAME_STATE.PAUSE:
                     gameTmr.Stop();
@@ -175,8 +179,8 @@ namespace GameWFA
                     ee.Coords = CreateStartCoords(lane, ee);
                     ee.LaneMove = lane;
                     break;
-                case ENTITY_MINION_CLASS_ENEMY.Spider:
-                    ee = new Spider();
+                case ENTITY_MINION_CLASS_ENEMY.Basilisk:
+                    ee = new Basilisk();
                     ee.Coords = CreateStartCoords(lane, ee);
                     ee.LaneMove = lane;
                     break;
@@ -193,13 +197,13 @@ namespace GameWFA
             switch (Lane)
             {
                 case 1:
-                    startCoords = new PointF(10, 100);
+                    startCoords = new PointF(10, 410);
                     break;
                 case 2:
-                    startCoords = new PointF(10, 300);
+                    startCoords = new PointF(10, 435);
                     break;
                 case 3:
-                    startCoords = new PointF(10, 500);
+                    startCoords = new PointF(10, 460);
                     break;
                 default:
                     startCoords = new PointF();
@@ -213,22 +217,13 @@ namespace GameWFA
             if (allyHero.Gold >= cost) { allyHero.LevelUp(cost); costLbl.Text = costLbl.Text.Remove(15); costLbl.Text += (cost * 2).ToString(); }
             else logLbl.Text += "You don't hane enough money to level up your hero\r\n";
         }
-        //private void GameAndWaveCheck()
-        //{
-        //    if (allyHero.Health <= 0)
-        //    {
-        //        SetState(GAME_STATE.GAME_OVER);
-        //    }
-        //    bool waveUp = false;
-        //    for (int i = 0; i < SIZE * wave; i++)
-        //    {
-        //        if (enemyMinions[i].Health <= 0 && i + 1 == SIZE * wave)
-        //        {
-        //            waveUp = true;
-        //        }
-        //    }
-        //    if (waveUp) wave++;
-        //}
+        private void GameAndWaveCheck()
+        {
+            if (allyHero.Health <= 0 && enemyMinions.Count >= 10)
+            {
+                SetState(GAME_STATE.GAME_OVER);
+            }
+        }
         private void Draw()
         {
             if (bm != null)
@@ -243,10 +238,27 @@ namespace GameWFA
         private void ReDraw(Graphics g)
         {
             g.Clear(DefaultBackColor);
-
+            g.DrawImageUnscaled(Properties.Resources.BackGround, 0, 0);
+            g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 410), new PointF(800, 750));
+            g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 435), new PointF(800, 750));
+            g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 460), new PointF(800, 750));
+            g.DrawLine(new Pen(Color.DarkCyan), new PointF(800, 750), new PointF(300, 100));
+            g.DrawLine(new Pen(Color.DarkGreen), new PointF(300, 100), new PointF(675, 135));
+            g.DrawLine(new Pen(Color.DarkCyan), new PointF(675, 135), new PointF(900, 300));
             foreach (var item in enemyMinions)
             {
-                g.FillRectangle(new SolidBrush(Color.Red), item.Coords.X, item.Coords.Y, 10, 10);
+                switch (item.MinionClass)
+                {
+                    case ENTITY_MINION_CLASS_ENEMY.Goblin:
+                        g.DrawImage(Properties.Resources.Goblin, item.Coords.X, item.Coords.Y - 50);
+                        break;
+                    case ENTITY_MINION_CLASS_ENEMY.Basilisk:
+                        g.DrawImage(Properties.Resources.Basilisk, item.Coords.X, item.Coords.Y - 50);
+                        break;
+                    case ENTITY_MINION_CLASS_ENEMY.Golem:
+                        g.DrawImage(Properties.Resources.Stone_golem, item.Coords.X, item.Coords.Y - 50);
+                        break;
+                }
             }
             foreach (var item in allyMinions)
             {
@@ -263,12 +275,6 @@ namespace GameWFA
                         break;
                 }
             }
-            g.DrawImageUnscaled(Properties.Resources.Castle, 725, 0);
-            g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 100), new PointF(500, 750));
-            g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 300), new PointF(500, 750));
-            g.DrawLine(new Pen(Color.DarkGreen), new PointF(10, 500), new PointF(500, 750));
-            g.DrawLine(new Pen(Color.DarkCyan), new PointF(500, 750), new PointF(800, 200));
-            g.DrawEllipse(new Pen(Color.Black), 450, 700, 100, 100);
         }
         private void MoveObjects()
         {
@@ -280,74 +286,63 @@ namespace GameWFA
                         switch (item.LaneMove)
                         {
                             case 1:
-                                item.Coords.X += 49F;
-                                item.Coords.Y += 65F;
-                                if (item.Coords == new PointF(500, 750)) item.CheckPoints[0] = true;
+                                item.Coords.X += 79F;
+                                item.Coords.Y += 34F;
+                                if (item.Coords == new PointF(800, 750)) item.CheckPoints[0] = true;
                                 break;
                             case 2:
-                                item.Coords.X += 49F;
-                                item.Coords.Y += 45F;
-                                if (item.Coords == new PointF(500, 750)) item.CheckPoints[0] = true;
+                                item.Coords.X += 79F;
+                                item.Coords.Y += 31.5F;
+                                if (item.Coords == new PointF(800, 750)) item.CheckPoints[0] = true;
                                 break;
                             case 3:
-                                item.Coords.X += 49F;
-                                item.Coords.Y += 25F;
-                                if (item.Coords == new PointF(500, 750)) item.CheckPoints[0] = true;
+                                item.Coords.X += 79F;
+                                item.Coords.Y += 29F;
+                                if (item.Coords == new PointF(800, 750)) item.CheckPoints[0] = true;
                                 break;
                         }
                     }
                     else if (item.CheckPoints[1] == false)
                     {
-                        switch (item.LaneMove)
-                        {
-                            case 1:
-                                item.Coords.X += 30F;
-                                item.Coords.Y -= 55F;
-                                if (item.Coords == new PointF(800, 200)) item.CheckPoints[1] = true;
-                                break;
-                            case 2:
-                                item.Coords.X += 30F;
-                                item.Coords.Y -= 55F;
-                                if (item.Coords == new PointF(800, 200)) item.CheckPoints[1] = true;
-                                break;
-                            case 3:
-                                item.Coords.X += 30F;
-                                item.Coords.Y -= 55F;
-                                if (item.Coords == new PointF(800, 200)) item.CheckPoints[1] = true;
-                                break;
-                        }
+                        item.Coords.X -= 50F;
+                        item.Coords.Y -= 65F;
+                        if (item.Coords == new PointF(300, 100)) item.CheckPoints[1] = true;
+                    }
+                    else if (item.CheckPoints[2] == false)
+                    {
+                        item.Coords.X += 37.5F;
+                        item.Coords.Y += 3.5F;
+                        if (item.Coords == new PointF(675, 135)) item.CheckPoints[2] = true;
+                    }
+                    else if (item.CheckPoints[3] == false)
+                    {
+                        item.Coords.X += 22.5F;
+                        item.Coords.Y += 16.5F;
+                        if (item.Coords == new PointF(900, 300)) item.CheckPoints[3] = true;
                     }
             }
             foreach (var item in allyMinions.ToArray())
             {
                 if (!FindAim(item) && item.MoveFight != BL.Character_Classes.ACTION.Fight)
-                    switch (item.MinionClass)
+                    if (item.CheckPoints[0] == false)
                     {
-                        case ENTITY_MINION_CLASS_ALLY.Dwarf:
-                            if (item.Coords != new PointF(500, 750))
-                            {
-                                item.Coords.X -= 35F;
-                                item.Coords.Y += 55.0F;
-                            }
-                            break;
-                        case ENTITY_MINION_CLASS_ALLY.AirElemental:
-                            if (item.Coords != new PointF(500, 750))
-                            {
-                                item.Coords.X -= 30F;
-                                item.Coords.Y += 55.0F;
-                            }
-                            break;
-                        case ENTITY_MINION_CLASS_ALLY.Gargoyle:
-                            if (item.Coords != new PointF(500, 750))
-                            {
-                                item.Coords.X -= 25F;
-                                item.Coords.Y += 55.0F;
-                            }
-                            break;
+                        item.Coords.X -= 22.5F;
+                        item.Coords.Y -= 16.5F;
+                        if (item.Coords == new PointF(675, 135)) item.CheckPoints[0] = true;
+                    }
+                    else if (item.CheckPoints[1] == false)
+                    {
+                        item.Coords.X -= 37.5F;
+                        item.Coords.Y -= 3.5F;
+                        if (item.Coords == new PointF(300, 100)) item.CheckPoints[1] = true;
+                    }
+                    else
+                    {
+                        Random rnd = new Random();
+                        item.Coords = new PointF(325 - rnd.Next(50), 125);
                     }
             }
         }
-
         private void CreateAllyMinion()
         {
             AllyEntity ae;
@@ -358,24 +353,21 @@ namespace GameWFA
             {
                 case ENTITY_MINION_CLASS_ALLY.AirElemental:
                     ae = new AirElemental();
-                    ae.Coords = new PointF(800, 200);
                     break;
                 case ENTITY_MINION_CLASS_ALLY.Dwarf:
                     ae = new Dwarf();
-                    ae.Coords = new PointF(850, 200);
                     break;
                 case ENTITY_MINION_CLASS_ALLY.Gargoyle:
                     ae = new Gargoyle();
-                    ae.Coords = new PointF(750, 200);
                     break;
                 default:
                     ae = null;
                     break;
             }
+            ae.Coords = new PointF(900, 300);
             allyMinions.Add(ae);
             Draw();
         }
-
 
         private void gamePnl_MouseMove(object sender, MouseEventArgs e)
         {

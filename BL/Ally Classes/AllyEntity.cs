@@ -22,6 +22,7 @@ namespace BL.Character_Classes
         public virtual ENTITY_MINION_CLASS_ALLY MinionClass { get; protected set; }
         public ACTION MoveFight { get; set; }
         public int LaneMove { get; set; }
+        public bool[] CheckPoints { get; set; }
 
         public AllyEntity()
         {
@@ -35,9 +36,10 @@ namespace BL.Character_Classes
             MinionClass = ENTITY_MINION_CLASS_ALLY.Unknown;
             MoveFight = ACTION.Unknown;
             LaneMove = -1;
+            CheckPoints = new bool[2];
         }
 
-        public virtual int Hit(out string hit) { hit = "hit"; return Damage; }
+        public virtual int Hit(out string hit) { hit = "HIT"; return Damage; }
         public virtual void LevelUp(int cost)
         {
             Damage += Damage;

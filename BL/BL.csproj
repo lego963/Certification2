@@ -54,7 +54,8 @@
     <Compile Include="Enemy Classes\Heroes\Knight.cs" />
     <Compile Include="Enemy Classes\Minions\Goblin.cs" />
     <Compile Include="Enemy Classes\Minions\Golem.cs" />
-    <Compile Include="Enemy Classes\Minions\Spider.cs" />
+    <Compile Include="Enemy Classes\Minions\Basilisk.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Workers\Worker.cs" />
   </ItemGroup>

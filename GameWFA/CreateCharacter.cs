@@ -43,7 +43,7 @@ namespace GameWFA
                     MessageBox.Show("You must choose a class for your character");
                     break;
             }
-            if (eClass != ENTITY_HERO_CLASS_ALLY.Unknown) { Close(); mf.Enabled = true; mf.Focus(); }
+            if (eClass != ENTITY_HERO_CLASS_ALLY.Unknown) { Close(); mf.Enabled = true; mf.Focus();}
         }
 
         private void CreateCharacter_Load(object sender, EventArgs e)

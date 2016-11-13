@@ -4,7 +4,7 @@ using System.Drawing;
 namespace BL.Enemy_Classes
 {
     public enum ARMOR { Without = 0, Light = 10, Medium = 15, Heavy = 20, Hero = 30, Unknown = -1 };
-    public enum ENTITY_MINION_CLASS_ENEMY { Goblin, Spider, Golem, Unknown = -1 };
+    public enum ENTITY_MINION_CLASS_ENEMY { Goblin, Basilisk, Golem, Unknown = -1 };
     public enum ENTITY_HERO_CLASS_ENEMY { Knight, Unknown };
     public enum ACTION { Move, Fight, Unknown };
 
@@ -32,9 +32,9 @@ namespace BL.Enemy_Classes
             HeroClass = ENTITY_HERO_CLASS_ENEMY.Unknown;
             MoveFight = ACTION.Unknown;
             LaneMove = -1;
-            CheckPoints = new bool[2];
+            CheckPoints = new bool[4];
         }
 
-        public virtual int Hit(out string hit) { hit = "Hit"; return Damage; }
+        public virtual int Hit(out string hit) { hit = "HIT"; return Damage; }
     }
 }

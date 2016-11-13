@@ -96,9 +96,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Castle.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Dwarf.png" />
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +103,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Air_Elemental.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BackGround.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Lose.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GameOver.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Basilisk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Goblin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Stone_golem.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,13 +1,13 @@
 ﻿namespace BL.Enemy_Classes.Minions
 {
-    public class Spider : EnemyEntity
+    public class Basilisk : EnemyEntity
     {
-        public Spider() : base()
+        public Basilisk() : base()
         {
             Armor = ARMOR.Medium;
             Health = 5;
             Damage = rnd.Next(5, 8);
-            MinionClass = ENTITY_MINION_CLASS_ENEMY.Spider;
+            MinionClass = ENTITY_MINION_CLASS_ENEMY.Basilisk;
             MoveFight = ACTION.Move;
         }
         public override int Hit(out string hit)

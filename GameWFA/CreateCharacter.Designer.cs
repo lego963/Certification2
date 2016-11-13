@@ -40,9 +40,9 @@
             this.nameLbl.AutoSize = true;
             this.nameLbl.Location = new System.Drawing.Point(12, 51);
             this.nameLbl.Name = "nameLbl";
-            this.nameLbl.Size = new System.Drawing.Size(82, 13);
+            this.nameLbl.Size = new System.Drawing.Size(59, 13);
             this.nameLbl.TabIndex = 0;
-            this.nameLbl.Text = "Character name";
+            this.nameLbl.Text = "Hero name";
             // 
             // nameTxt
             // 
@@ -79,9 +79,9 @@
             this.classLbl.AutoSize = true;
             this.classLbl.Location = new System.Drawing.Point(12, 107);
             this.classLbl.Name = "classLbl";
-            this.classLbl.Size = new System.Drawing.Size(80, 13);
+            this.classLbl.Size = new System.Drawing.Size(57, 13);
             this.classLbl.TabIndex = 4;
-            this.classLbl.Text = "Character class";
+            this.classLbl.Text = "Hero class";
             // 
             // CreateCharacter
             // 
@@ -94,7 +94,7 @@
             this.Controls.Add(this.nameTxt);
             this.Controls.Add(this.nameLbl);
             this.Name = "CreateCharacter";
-            this.Text = "CreateCharacter";
+            this.Text = "Create Hero";
             this.Load += new System.EventHandler(this.CreateCharacter_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

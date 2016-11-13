@@ -17,8 +17,8 @@
         public override int Hit(out string hit)
         {
             int luck = rnd.Next(100);
-            if (luck > 75) { hit = "Cavalry Hit"; return Damage * 2; }
-            { hit = "Hit"; return Damage; }
+            if (luck > 75) { hit = "CAVALRY HIT"; return Damage * 2; }
+            { hit = "HIT"; return Damage; }
         }
     }
 }

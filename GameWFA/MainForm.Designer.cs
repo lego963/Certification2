@@ -112,7 +112,7 @@
             this.logandbtnPnl.Dock = System.Windows.Forms.DockStyle.Left;
             this.logandbtnPnl.Location = new System.Drawing.Point(0, 0);
             this.logandbtnPnl.Name = "logandbtnPnl";
-            this.logandbtnPnl.Size = new System.Drawing.Size(291, 961);
+            this.logandbtnPnl.Size = new System.Drawing.Size(291, 886);
             this.logandbtnPnl.TabIndex = 5;
             // 
             // pauseBtn
@@ -189,7 +189,7 @@
             this.gamePnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gamePnl.Location = new System.Drawing.Point(291, 0);
             this.gamePnl.Name = "gamePnl";
-            this.gamePnl.Size = new System.Drawing.Size(1193, 961);
+            this.gamePnl.Size = new System.Drawing.Size(1333, 886);
             this.gamePnl.TabIndex = 6;
             this.gamePnl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.gamePnl_MouseMove);
             // 
@@ -202,7 +202,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1484, 961);
+            this.ClientSize = new System.Drawing.Size(1624, 886);
             this.Controls.Add(this.gamePnl);
             this.Controls.Add(this.createCharBtn);
             this.Controls.Add(this.logandbtnPnl);
