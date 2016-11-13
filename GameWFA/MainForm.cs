@@ -202,13 +202,13 @@ namespace GameWFA
                 switch (game.AllyHero.HeroClass)
                 {
                     case ENTITY_HERO_CLASS_ALLY.Griffin:
-                        g.DrawImage(Properties.Resources.Royal_Griffin, game.AllyHero.Coords);
+                        g.DrawImage(Properties.Resources.Royal_Griffin, game.AllyHero.Coords.X, game.AllyHero.Coords.Y - 50);
                         break;
                     case ENTITY_HERO_CLASS_ALLY.Knight:
-                        g.DrawImage(Properties.Resources.Champion, game.AllyHero.Coords);
+                        g.DrawImage(Properties.Resources.Champion, game.AllyHero.Coords.X, game.AllyHero.Coords.Y - 50);
                         break;
                     case ENTITY_HERO_CLASS_ALLY.Crusader:
-                        g.DrawImage(Properties.Resources.Crusader, game.AllyHero.Coords);
+                        g.DrawImage(Properties.Resources.Crusader, game.AllyHero.Coords.X, game.AllyHero.Coords.Y - 50);
                         break;
                 }
             }

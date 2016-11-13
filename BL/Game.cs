@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BL.Ally_Classes;
 using System.Windows.Forms;
 using BL.Character_Classes;
 using BL.Enemy_Classes;
@@ -223,6 +219,7 @@ namespace BL
                     enemy.Health -= item.Hit(out s);
                     logLbl.Text += String.Format("{0} {1} {2}\r\n", item.MinionClass, s, enemy.MinionClass);
                     if (enemy.Health <= 0) { EnemyMinions.Remove(enemy); item.MoveFight = Character_Classes.ACTION.Move; logLbl.Text += "ALLY minion killed ENEMY minion\r\n"; return false; }
+                    return true;
                 }
             }
             distance = Math.Sqrt(Math.Pow(enemy.Coords.X - AllyHero.Coords.X, 2) + Math.Pow(enemy.Coords.Y - AllyHero.Coords.Y, 2));
@@ -237,6 +234,7 @@ namespace BL
                 enemy.Health -= AllyHero.Hit(out s);
                 logLbl.Text += String.Format("{0} {1} {2}\r\n", AllyHero.HeroClass, s, enemy.MinionClass);
                 if (enemy.Health <= 0) { EnemyMinions.Remove(enemy); AllyHero.MoveFight = Character_Classes.ACTION.Move; logLbl.Text += "ALLY minion killed ENEMY HERO\r\n"; return false; }
+                return true;
             }
 
             foreach (var item in Mines.ToArray())
