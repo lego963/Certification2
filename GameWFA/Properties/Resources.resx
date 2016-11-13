@@ -121,11 +121,23 @@
   <data name="Air_Elemental" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Air_Elemental.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BackGround" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BackGround.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BackGround1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BackGround1.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackGround2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BackGround2.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackGround3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BackGround3.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Basilisk" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Basilisk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Champion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Champion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Crusader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Crusader.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Dwarf" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Dwarf.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -141,6 +153,9 @@
   </data>
   <data name="Lose" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lose.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Royal_Griffin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Royal_Griffin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Stone_golem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Stone_golem.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

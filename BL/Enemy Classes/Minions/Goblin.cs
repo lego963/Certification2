@@ -5,7 +5,7 @@
         public Goblin() : base()
         {
             Armor = ARMOR.Light;
-            Health = 5;
+            Health = 25;
             Damage = rnd.Next(1, 3);
             MinionClass = ENTITY_MINION_CLASS_ENEMY.Goblin;
             MoveFight = ACTION.Move;

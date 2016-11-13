@@ -5,7 +5,7 @@
         public Basilisk() : base()
         {
             Armor = ARMOR.Medium;
-            Health = 5;
+            Health = 25;
             Damage = rnd.Next(5, 8);
             MinionClass = ENTITY_MINION_CLASS_ENEMY.Basilisk;
             MoveFight = ACTION.Move;

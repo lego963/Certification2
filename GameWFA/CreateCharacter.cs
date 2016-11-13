@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Windows.Forms;
 using BL.Character_Classes.Heroes;
+using BL;
 using BL.Character_Classes;
 
 namespace GameWFA
 {
     public partial class CreateCharacter : Form
     {
-        public ENTITY_HERO_CLASS_ALLY eClass { get; private set; }
-        public Griffin _griffin { get; private set; }
-        public Knight _knight { get; private set; }
-        public Crusader _crusader { get; private set; }
-        MainForm mf;
+        private MainForm mf { get; set; }
+        public Game game { get; set; }
 
-        public CreateCharacter(MainForm mf)
+        public CreateCharacter(MainForm mf, Game game)
         {
             InitializeComponent();
             this.mf = mf;
+            this.game = game;
         }
 
         private void createBtn_Click(object sender, EventArgs e)
@@ -27,23 +26,23 @@ namespace GameWFA
             switch (classCmbB.Text)
             {
                 case "Griffin":
-                    eClass = ENTITY_HERO_CLASS_ALLY.Griffin;
-                    _griffin = new Griffin(name);
+                    game.AllyHero = new Griffin(name);
+                    game.AllyHero.Coords = new System.Drawing.PointF(900, 300);
                     break;
                 case "Knight":
-                    eClass = ENTITY_HERO_CLASS_ALLY.Knight;
-                    _knight = new Knight(name);
+                    game.AllyHero = new Knight(name);
+                    game.AllyHero.Coords = new System.Drawing.PointF(900, 300);
                     break;
                 case "Crusader":
-                    eClass = ENTITY_HERO_CLASS_ALLY.Crusader;
-                    _crusader = new Crusader(name);
+                    game.AllyHero = new Crusader(name);
+                    game.AllyHero.Coords = new System.Drawing.PointF(900, 300);
                     break;
                 default:
-                    eClass = ENTITY_HERO_CLASS_ALLY.Unknown;
-                    MessageBox.Show("You must choose a class for your character");
+                    game.AllyHero = null;
                     break;
             }
-            if (eClass != ENTITY_HERO_CLASS_ALLY.Unknown) { Close(); mf.Enabled = true; mf.Focus();}
+            if (game.AllyHero != null) { Close(); mf.Enabled = true; mf.Focus(); mf.game = game; }
+            else { MessageBox.Show("Choose the hero class"); }
         }
 
         private void CreateCharacter_Load(object sender, EventArgs e)

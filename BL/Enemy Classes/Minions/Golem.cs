@@ -6,7 +6,7 @@
         public Golem() : base()
         {
             Armor = ARMOR.Heavy;
-            Health = 5;
+            Health = 25;
             Damage = rnd.Next(3, 5);
             MinionClass = ENTITY_MINION_CLASS_ENEMY.Golem;
             MoveFight = ACTION.Move;

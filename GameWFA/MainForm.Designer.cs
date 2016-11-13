@@ -32,7 +32,6 @@
             this.createCharBtn = new System.Windows.Forms.Button();
             this.startBtn = new System.Windows.Forms.Button();
             this.levelupBtn = new System.Windows.Forms.Button();
-            this.loaddataBtn = new System.Windows.Forms.Button();
             this.logLbl = new System.Windows.Forms.Label();
             this.logandbtnPnl = new System.Windows.Forms.Panel();
             this.pauseBtn = new System.Windows.Forms.Button();
@@ -42,8 +41,9 @@
             this.coordsLbl = new System.Windows.Forms.Label();
             this.costLbl = new System.Windows.Forms.Label();
             this.currentstatesLbl = new System.Windows.Forms.Label();
-            this.gamePnl = new System.Windows.Forms.Panel();
             this.gameTmr = new System.Windows.Forms.Timer(this.components);
+            this.gamePnl = new System.Windows.Forms.Panel();
+            this.restartBtn = new System.Windows.Forms.Button();
             this.logandbtnPnl.SuspendLayout();
             this.scrollPnl.SuspendLayout();
             this.SuspendLayout();
@@ -78,16 +78,6 @@
             this.levelupBtn.UseVisualStyleBackColor = true;
             this.levelupBtn.Click += new System.EventHandler(this.levelupBtn_Click);
             // 
-            // loaddataBtn
-            // 
-            this.loaddataBtn.Location = new System.Drawing.Point(162, 12);
-            this.loaddataBtn.Name = "loaddataBtn";
-            this.loaddataBtn.Size = new System.Drawing.Size(123, 23);
-            this.loaddataBtn.TabIndex = 3;
-            this.loaddataBtn.Text = "Load Data";
-            this.loaddataBtn.UseVisualStyleBackColor = true;
-            this.loaddataBtn.Click += new System.EventHandler(this.loaddataBtn_Click);
-            // 
             // logLbl
             // 
             this.logLbl.AutoSize = true;
@@ -99,6 +89,7 @@
             // 
             // logandbtnPnl
             // 
+            this.logandbtnPnl.Controls.Add(this.restartBtn);
             this.logandbtnPnl.Controls.Add(this.pauseBtn);
             this.logandbtnPnl.Controls.Add(this.scrollPnl);
             this.logandbtnPnl.Controls.Add(this.minionCostLbl);
@@ -106,13 +97,12 @@
             this.logandbtnPnl.Controls.Add(this.coordsLbl);
             this.logandbtnPnl.Controls.Add(this.costLbl);
             this.logandbtnPnl.Controls.Add(this.currentstatesLbl);
-            this.logandbtnPnl.Controls.Add(this.loaddataBtn);
             this.logandbtnPnl.Controls.Add(this.startBtn);
             this.logandbtnPnl.Controls.Add(this.levelupBtn);
             this.logandbtnPnl.Dock = System.Windows.Forms.DockStyle.Left;
             this.logandbtnPnl.Location = new System.Drawing.Point(0, 0);
             this.logandbtnPnl.Name = "logandbtnPnl";
-            this.logandbtnPnl.Size = new System.Drawing.Size(291, 886);
+            this.logandbtnPnl.Size = new System.Drawing.Size(291, 883);
             this.logandbtnPnl.TabIndex = 5;
             // 
             // pauseBtn
@@ -181,6 +171,10 @@
             this.currentstatesLbl.TabIndex = 6;
             this.currentstatesLbl.Text = "Current State";
             // 
+            // gameTmr
+            // 
+            this.gameTmr.Tick += new System.EventHandler(this.gameTmr_Tick);
+            // 
             // gamePnl
             // 
             this.gamePnl.AutoSize = true;
@@ -189,23 +183,30 @@
             this.gamePnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gamePnl.Location = new System.Drawing.Point(291, 0);
             this.gamePnl.Name = "gamePnl";
-            this.gamePnl.Size = new System.Drawing.Size(1333, 886);
+            this.gamePnl.Size = new System.Drawing.Size(1371, 883);
             this.gamePnl.TabIndex = 6;
             this.gamePnl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.gamePnl_MouseMove);
             // 
-            // gameTmr
+            // restartBtn
             // 
-            this.gameTmr.Tick += new System.EventHandler(this.gameTmr_Tick);
+            this.restartBtn.Location = new System.Drawing.Point(163, 11);
+            this.restartBtn.Name = "restartBtn";
+            this.restartBtn.Size = new System.Drawing.Size(122, 23);
+            this.restartBtn.TabIndex = 13;
+            this.restartBtn.Text = "Restart";
+            this.restartBtn.UseVisualStyleBackColor = true;
+            this.restartBtn.Click += new System.EventHandler(this.restartBtn_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1624, 886);
+            this.ClientSize = new System.Drawing.Size(1662, 883);
             this.Controls.Add(this.gamePnl);
             this.Controls.Add(this.createCharBtn);
             this.Controls.Add(this.logandbtnPnl);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Project Form";
@@ -224,7 +225,6 @@
         private System.Windows.Forms.Button createCharBtn;
         private System.Windows.Forms.Button startBtn;
         private System.Windows.Forms.Button levelupBtn;
-        private System.Windows.Forms.Button loaddataBtn;
         private System.Windows.Forms.Label logLbl;
         private System.Windows.Forms.Panel logandbtnPnl;
         private System.Windows.Forms.Panel gamePnl;
@@ -236,6 +236,7 @@
         private System.Windows.Forms.Button buyMinionBtn;
         private System.Windows.Forms.Panel scrollPnl;
         private System.Windows.Forms.Button pauseBtn;
+        private System.Windows.Forms.Button restartBtn;
     }
 }
 
