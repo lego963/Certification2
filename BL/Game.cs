@@ -248,7 +248,7 @@ namespace BL
                     string s;
                     item.Health -= enemy.Hit(out s);
                     logLbl.Text += String.Format("{0} {1} MINE\r\n", enemy.MinionClass, s);
-                    if (item.Health <= 0) { Mines.Remove(item); enemy.MoveFight = Enemy_Classes.ACTION.Move; logLbl.Text += "ENEMY minion destroyed MINE minion\r\n"; return false; }
+                    if (item.Health <= 0) { Mines.Remove(item); enemy.MoveFight = Enemy_Classes.ACTION.Move; logLbl.Text += "ENEMY minion destroyed MINE\r\n"; return false; }
                     return true;
                 }
             }
